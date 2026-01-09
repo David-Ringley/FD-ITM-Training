@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITM Decoded - Module 2: The ITM Landscape</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header .description {
+            color: #666;
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+
+        .header .module-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .header .module-info span {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .content-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow-x: auto;
+            word-wrap: break-word;
+        }
+
+        .content-card h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            word-wrap: break-word;
+        }
+
+        .content-card h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.3rem;
+        }
+
+        .content-card p {
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .learning-objectives {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-left: 4px solid #667eea;
+            padding: 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .learning-objectives h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            margin-top: 0;
+        }
+
+        .learning-objectives ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .learning-objectives li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #444;
+        }
+
+        .learning-objectives li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        @media (max-width: 600px) {
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-card .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .accordion {
+            margin: 20px 0;
+        }
+
+        .accordion-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .accordion-header {
+            padding: 18px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .accordion-header:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .accordion-header.active {
+            background: rgba(102, 126, 234, 0.15);
+            color: #667eea;
+        }
+
+        .accordion-header .icon {
+            transition: transform 0.3s ease;
+            color: #667eea;
+        }
+
+        .accordion-header.active .icon {
+            transform: rotate(45deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 20px;
+            background: white;
+        }
+
+        .accordion-content.show {
+            max-height: 800px;
+            padding: 20px;
+        }
+
+        .ecosystem-diagram {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .ecosystem-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .ecosystem-box {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 15px 20px;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .ecosystem-box.sp-software {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .ecosystem-box.ahj-platform {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .ecosystem-box.firstdue {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+        }
+
+        .ecosystem-box h5 {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .ecosystem-box p {
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .ecosystem-arrow {
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        .competitor-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .competitor-card.liv {
+            border-left: 5px solid #3b82f6;
+        }
+
+        .competitor-card.brycer {
+            border-left: 5px solid #f59e0b;
+        }
+
+        .competitor-card.irol {
+            border-left: 5px solid #10b981;
+        }
+
+        .competitor-card.firstdue {
+            border-left: 5px solid #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+        }
+
+        .competitor-card.sp-software {
+            border-left: 5px solid #8b5cf6;
+        }
+
+        .competitor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .competitor-header h4 {
+            font-size: 1.3rem;
+            color: #333;
+        }
+
+        .competitor-tag {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tag-standalone {
+            background: rgba(239, 68, 68, 0.15);
+            color: #dc2626;
+        }
+
+        .tag-integrated {
+            background: rgba(16, 185, 129, 0.15);
+            color: #059669;
+        }
+
+        .tag-sp-software {
+            background: rgba(139, 92, 246, 0.15);
+            color: #7c3aed;
+        }
+
+        .strengths-weaknesses {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .strengths-weaknesses {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .strengths, .weaknesses, .features-list {
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .strengths {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .weaknesses {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .features-list {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .strengths h5, .weaknesses h5, .features-list h5 {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .strengths h5 {
+            color: #059669;
+        }
+
+        .weaknesses h5 {
+            color: #dc2626;
+        }
+
+        .features-list h5 {
+            color: #7c3aed;
+        }
+
+        .strengths ul, .weaknesses ul, .features-list ul {
+            list-style: none;
+            padding: 0;
+            font-size: 0.9rem;
+        }
+
+        .strengths li, .weaknesses li, .features-list li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #444;
+        }
+
+        .strengths li::before {
+            content: "+";
+            position: absolute;
+            left: 0;
+            color: #059669;
+            font-weight: bold;
+        }
+
+        .weaknesses li::before {
+            content: "−";
+            position: absolute;
+            left: 2px;
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .features-list li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: #7c3aed;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9rem;
+            table-layout: fixed;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 10px;
+            text-align: left;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #444;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .comparison-table .check {
+            color: #059669;
+            font-weight: bold;
+        }
+
+        .comparison-table .partial {
+            color: #d97706;
+        }
+
+        .comparison-table .none {
+            color: #dc2626;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .highlight-box.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
+        .highlight-box.success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .highlight-box.api {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .highlight-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .highlight-box.warning h4 {
+            color: #d97706;
+        }
+
+        .highlight-box.success h4 {
+            color: #059669;
+        }
+
+        .highlight-box.api h4 {
+            color: #7c3aed;
+        }
+
+        .highlight-box p {
+            color: #444;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+        }
+
+        .knowledge-check h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question {
+            margin-bottom: 25px;
+        }
+
+        .question p {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+            color: #444;
+        }
+
+        .option:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
+        }
+
+        .option.correct {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: #059669;
+        }
+
+        .option.incorrect {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #dc2626;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #047857;
+        }
+
+        .feedback.incorrect {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #b91c1c;
+        }
+
+        .objection-card {
+            background: white;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .objection-header {
+            background: rgba(239, 68, 68, 0.1);
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .objection-header:hover {
+            background: rgba(239, 68, 68, 0.15);
+        }
+
+        .objection-header h4 {
+            color: #b91c1c;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .objection-header .toggle {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: #b91c1c;
+        }
+
+        .objection-header.active .toggle {
+            transform: rotate(180deg);
+        }
+
+        .objection-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .objection-content.show {
+            max-height: 500px;
+        }
+
+        .objection-response {
+            padding: 20px;
+            background: rgba(16, 185, 129, 0.08);
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .objection-response h5 {
+            color: #059669;
+            margin-bottom: 10px;
+        }
+
+        .objection-response p {
+            color: #444;
+        }
+
+        .vs-comparison {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .vs-box {
+            flex: 1;
+            min-width: 200px;
+            max-width: 350px;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            background: white;
+        }
+
+        .vs-box.standalone {
+            border: 2px solid #dc2626;
+        }
+
+        .vs-box.integrated {
+            border: 2px solid #059669;
+        }
+
+        .vs-box h4 {
+            margin-bottom: 15px;
+        }
+
+        .vs-box.standalone h4 {
+            color: #b91c1c;
+        }
+
+        .vs-box.integrated h4 {
+            color: #059669;
+        }
+
+        .vs-box ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .vs-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #444;
+        }
+
+        .vs-box.standalone li::before {
+            content: "⚠";
+            position: absolute;
+            left: 0;
+        }
+
+        .vs-box.integrated li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #059669;
+        }
+
+        .vs-circle {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .case-study {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .case-study h4 {
+            color: #2563eb;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .case-study p {
+            color: #444;
+        }
+
+        .section-divider {
+            text-align: center;
+            margin: 40px 0 30px 0;
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+        }
+
+        .section-divider span {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px 25px;
+            position: relative;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 25px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.prev {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .nav-btn.prev:hover {
+            background: #d0d0d0;
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .nav-btn.next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .sp-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 700px) {
+            .sp-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sp-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .sp-card h5 {
+            color: #7c3aed;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .sp-card p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .sp-card .sp-note {
+            font-size: 0.8rem;
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 ITM Decoded</h1>
+            <div class="subtitle">Module 2: The ITM Landscape</div>
+            <p class="description">Understanding the Competition & Positioning First Due</p>
+            <div class="module-info">
+                <span>⏱️ 25-30 minutes</span>
+                <span>📊 Competitive Analysis</span>
+                <span>🎯 Sales Positioning</span>
+            </div>
+        </div>
+
+        <!-- Slide 1: Introduction -->
+        <div class="content-card">
+            <h2>📋 Module 2 Overview</h2>
+            <p>Welcome to Module 2! Now that you understand the fundamentals of ITM from Module 1, it's time to explore the competitive landscape. Understanding the ecosystem of ITM software - and where each player fits - is essential for effective positioning and winning deals.</p>
+            
+            <div class="learning-objectives">
+                <h3>🎯 Learning Objectives</h3>
+                <ul>
+                    <li>Understand the complete ITM software ecosystem (Service Provider Software vs. AHJ Platforms)</li>
+                    <li>Identify the difference between standalone AHJ platforms and integrated platforms</li>
+                    <li>Know the key Service Provider Inspection Software vendors and their role</li>
+                    <li>Know the strengths and weaknesses of LIV, Brycer/TCE, and IROL</li>
+                    <li>Articulate First Due's competitive advantages and API integration strategy</li>
+                    <li>Handle common objections when competing against standalone platforms</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 2: The ITM Ecosystem -->
+        <div class="content-card">
+            <h2>🔄 Understanding the ITM Software Ecosystem</h2>
+            <p>Before diving into competitors, it's critical to understand how the ITM software ecosystem works. There are <strong>two distinct types of software</strong> in this space, and they serve different users:</p>
+
+            <div class="ecosystem-diagram">
+                <h4 style="text-align: center; color: #667eea; margin-bottom: 20px;">The ITM Data Flow</h4>
+                <div class="ecosystem-row">
+                    <div class="ecosystem-box sp-software">
+                        <h5>Service Provider Software</h5>
+                        <p>Inspect Point, ServiceTrade, Uptick, BuildingReports</p>
+                    </div>
+                    <span class="ecosystem-arrow">→</span>
+                    <div class="ecosystem-box">
+                        <h5>Report Generation</h5>
+                        <p>PDF + Photos + Metadata</p>
+                    </div>
+                    <span class="ecosystem-arrow">→</span>
+                    <div class="ecosystem-box ahj-platform">
+                        <h5>AHJ Platform</h5>
+                        <p>LIV, Brycer, IROL, First Due</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box warning">
+                <h4>⚠️ Critical Distinction</h4>
+                <p><strong>LIV, Brycer, IROL, and First Due do NOT provide software for service providers to perform inspections.</strong> They are platforms for service providers to <em>submit</em> their completed inspection reports to the AHJ. The submission process typically involves adding metadata (system type, address, inspection date) and uploading a PDF copy of the report along with any photos.</p>
+            </div>
+
+            <h3>Two Types of ITM Software</h3>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🔧 Service Provider Inspection Software</span>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><strong>Used by:</strong> Fire protection contractors (sprinkler companies, alarm companies, extinguisher companies)</p>
+                        <p><strong>Purpose:</strong> Help technicians perform inspections in the field, capture data, generate NFPA-compliant reports, manage scheduling, track deficiencies, and run their business operations.</p>
+                        <p><strong>Examples:</strong> Inspect Point, ServiceTrade, Uptick, BuildingReports, FormLink</p>
+                        <p><strong>Output:</strong> Professional PDF inspection reports that are then submitted to AHJs</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🏛️ AHJ Compliance Platforms</span>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><strong>Used by:</strong> Fire departments, fire marshals, code enforcement officials (AHJs)</p>
+                        <p><strong>Purpose:</strong> Receive ITM report submissions from service providers, track compliance status, manage deficiency remediation, and ensure buildings maintain fire protection systems.</p>
+                        <p><strong>Examples:</strong> LIV, Brycer/TCE, IROL, First Due</p>
+                        <p><strong>Input:</strong> PDF reports + metadata uploaded by service providers through a portal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>Service Provider Software</span>
+        </div>
+
+        <!-- Slide 3: Service Provider Software Overview -->
+        <div class="content-card">
+            <h2>🔧 Service Provider Inspection Software</h2>
+            <p>These are the tools that fire protection contractors use to actually perform inspections and generate reports. Understanding these vendors matters because:</p>
+            <ul style="margin: 15px 0 15px 20px; color: #444;">
+                <li>Service providers often ask which inspection software works with your platform</li>
+                <li>Some vendors have built integrations with AHJ platforms (like Inspect Point → TCE, IROL, LIV)</li>
+                <li><strong>First Due is actively working with these vendors to build API integrations</strong></li>
+            </ul>
+
+            <div class="sp-grid">
+                <div class="sp-card">
+                    <h5>📱 Inspect Point</h5>
+                    <p>Market leader with 15,000+ users. Offers AI-powered inspection tools, NFPA-compliant forms, scheduling, deficiency tracking, and proposals. Has integrations with TCE, IROL, and LIV for automated report submission.</p>
+                    <p class="sp-note">Acquired FormLink Systems in 2023</p>
+                </div>
+                <div class="sp-card">
+                    <h5>📱 ServiceTrade</h5>
+                    <p>Field service management platform for commercial contractors. Offers NFPA inspection forms, deficiency documentation, quoting, and customer portal. Recently launched integrated inspections (2025). Has TCE integration.</p>
+                    <p class="sp-note">Broader FSM platform, not fire-specific</p>
+                </div>
+                <div class="sp-card">
+                    <h5>📱 Uptick</h5>
+                    <p>Cloud-based platform purpose-built for fire protection. 700+ companies. Offers scheduling, digital forms, deficiency quoting, invoicing. Strong in Australia/UK, recently expanded to North America (2024).</p>
+                    <p class="sp-note">Modern UI, per-user pricing model</p>
+                </div>
+                <div class="sp-card">
+                    <h5>📱 BuildingReports</h5>
+                    <p>Pioneer in barcode-based inspections with ScanSeries suite. Focuses on device-level compliance with time-stamped scans. Offers ComplianceCenter for AHJs (free). Strong in national accounts.</p>
+                    <p class="sp-note">Emphasis on barcode verification</p>
+                </div>
+            </div>
+
+            <div class="highlight-box api">
+                <h4>🔌 First Due API Integration Strategy</h4>
+                <p><strong>First Due is actively working with Service Provider software vendors to provide API access.</strong> This means service providers using tools like Inspect Point, ServiceTrade, or Uptick will be able to submit ITM reports directly to First Due without manually uploading PDFs. This eliminates duplicate data entry and streamlines the entire workflow for both service providers AND the AHJ.</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Market Overview -->
+        <div class="content-card">
+            <h2>📈 The AHJ Platform Market</h2>
+            <p>The AHJ compliance platform market has grown rapidly as fire departments move away from paper-based processes. Here's what's driving this growth:</p>
+            
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="number">1,400+</span>
+                    <span class="label">AHJs using ITM platforms</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number">60%</span>
+                    <span class="label">Time savings with digital ITM</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number">3x</span>
+                    <span class="label">Faster deficiency resolution</span>
+                </div>
+            </div>
+
+            <h3>Key Market Drivers</h3>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>📄 The Paper Problem</span>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Fire departments traditionally received ITM reports via fax, email, or physical drop-off. Reports were filed in cabinets or scattered across shared drives with no standardization, no tracking, and no way to ensure deficiencies were resolved.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>⚖️ Regulatory Pressure</span>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Fire codes require AHJs to receive and review ITM reports. Without a system to track submissions, departments face liability exposure when systems fail during emergencies. Digital platforms provide audit trails and accountability.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>👥 Service Provider Expectations</span>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Service providers want efficient ways to submit reports and demonstrate compliance to their clients. Modern platforms offer portals, automated confirmations, and integration with their inspection software - reducing manual upload work.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Two Categories -->
+        <div class="content-card">
+            <h2>⚔️ Two Categories of AHJ Platforms</h2>
+            <p>Not all AHJ platforms are created equal. Understanding this fundamental distinction is critical to your positioning strategy.</p>
+
+            <div class="vs-comparison">
+                <div class="vs-box standalone">
+                    <h4>🔷 Standalone ITM Platforms</h4>
+                    <ul>
+                        <li>ITM is the ONLY function</li>
+                        <li>Separate system from other fire prevention tools</li>
+                        <li>Data lives in isolation</li>
+                        <li>Requires integration or manual data transfer</li>
+                        <li>Examples: LIV, Brycer/TCE, IROL</li>
+                    </ul>
+                </div>
+                <div class="vs-circle">VS</div>
+                <div class="vs-box integrated">
+                    <h4>🔷 Integrated Fire Prevention Platform</h4>
+                    <ul>
+                        <li>ITM is ONE part of comprehensive solution</li>
+                        <li>Connected to inspections, permits, pre-plans</li>
+                        <li>Single source of truth for all prevention data</li>
+                        <li>Operations and prevention share information</li>
+                        <li>Example: First Due</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>💡 Key Insight</h4>
+                <p>When an AHJ chooses a standalone ITM platform, they're adding ANOTHER system to manage. When they choose First Due, they're consolidating their entire fire prevention operation into one platform - and their ITM data connects to occupancy records, pre-plans, and operations.</p>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>Competitor Deep Dive</span>
+        </div>
+
+        <!-- Slide 6: LIV Overview -->
+        <div class="content-card">
+            <h2>🔵 LIV (Life Safety Inspection Vault)</h2>
+            
+            <div class="competitor-card liv">
+                <div class="competitor-header">
+                    <h4>LIV / LivSafe</h4>
+                    <span class="competitor-tag tag-standalone">Standalone AHJ Platform</span>
+                </div>
+                <p><strong>Founded:</strong> 2019 | <strong>HQ:</strong> Pocatello, Idaho | <strong>Funding:</strong> $28.7M (August 2025)</p>
+                <p><strong>Positioning:</strong> "Industry-leading provider of ITM compliance software for AHJs"</p>
+                
+                <h3>What They Offer</h3>
+                <p>LIV provides a portal for service providers to submit ITM reports (PDF upload + metadata) and tools for AHJs to track compliance, manage deficiencies, and automate notifications. Their platform includes compliance dashboards and analytics.</p>
+                
+                <h3>Recent Developments</h3>
+                <p>In November 2025, LIV launched "Compliance Review Services" where their specialists review submitted reports for accuracy and code compliance - this is an <strong>add-on service</strong> beyond their base platform. Also received $28.7M funding in August 2025.</p>
+
+                <div class="strengths-weaknesses">
+                    <div class="strengths">
+                        <h5>✅ Strengths</h5>
+                        <ul>
+                            <li>Purpose-built for ITM workflows</li>
+                            <li>Well-funded, growing customer base</li>
+                            <li>Real-time tracking and automation</li>
+                            <li>Deficiency remediation workflows</li>
+                            <li>Integrations with Inspect Point</li>
+                        </ul>
+                    </div>
+                    <div class="weaknesses">
+                        <h5>⚠️ Limitations</h5>
+                        <ul>
+                            <li>ITM ONLY - no inspections, permits, pre-plans</li>
+                            <li>Data silo - doesn't connect to operations</li>
+                            <li>Another login and system to manage</li>
+                            <li>Report review is an add-on cost</li>
+                            <li>Responders can't see ITM status</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Brycer/TCE Overview -->
+        <div class="content-card">
+            <h2>🟠 Brycer / The Compliance Engine (TCE)</h2>
+            
+            <div class="competitor-card brycer">
+                <div class="competitor-header">
+                    <h4>Brycer / TCE</h4>
+                    <span class="competitor-tag tag-standalone">Standalone AHJ Platform</span>
+                </div>
+                <p><strong>Market Position:</strong> Largest market share - "most widely adopted"</p>
+                <p><strong>Scope:</strong> 1,420+ AHJs nationwide</p>
+                <p><strong>Positioning:</strong> "The nation's most widely adopted fire and life safety compliance software"</p>
+                
+                <h3>What They Offer</h3>
+                <p>Brycer's Compliance Engine receives ITM report submissions and emphasizes their <strong>managed services model</strong> - Brycer staff handle report reviews, automated outreach (email, mail, phone), and deficiency follow-up on behalf of the AHJ. They also support backflow and elevator compliance.</p>
+                
+                <h3>Key Differentiators</h3>
+                <p>TCE includes report review by certified fire protection professionals as a <strong>STANDARD feature</strong> (not an add-on). AHJs pay nothing - service providers pay a per-system report fee that funds the platform and services.</p>
+
+                <div class="strengths-weaknesses">
+                    <div class="strengths">
+                        <h5>✅ Strengths</h5>
+                        <ul>
+                            <li>Largest market share (1,420+ AHJs)</li>
+                            <li>Built-in report review by professionals</li>
+                            <li>Managed services reduce AHJ workload</li>
+                            <li>Free to AHJs (service provider funded)</li>
+                            <li>Handles backflow & elevator compliance</li>
+                            <li>Integrations with Inspect Point, ServiceTrade</li>
+                        </ul>
+                    </div>
+                    <div class="weaknesses">
+                        <h5>⚠️ Limitations</h5>
+                        <ul>
+                            <li>ITM-focused - limited fire prevention scope</li>
+                            <li>Data doesn't flow to operations</li>
+                            <li>Separate system from inspections/permits</li>
+                            <li>Outsources compliance oversight to 3rd party</li>
+                            <li>No pre-plan integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: IROL Overview -->
+        <div class="content-card">
+            <h2>🟢 IROL (Inspection Reports Online)</h2>
+            
+            <div class="competitor-card irol">
+                <div class="competitor-header">
+                    <h4>IROL</h4>
+                    <span class="competitor-tag tag-standalone">Standalone AHJ Platform</span>
+                </div>
+                <p><strong>Focus:</strong> Prevention & Community Risk Reduction services</p>
+                <p><strong>Unique Angle:</strong> GIS and geospatial technology integration (Esri partner)</p>
+                <p><strong>Positioning:</strong> "Bridging people, processes, and technology for community safety"</p>
+                
+                <h3>What They Offer</h3>
+                <p>IROL provides web-based ITM report submission along with additional services like fire alarm registrations, property risk assessments, and basic pre-plan/occupancy tools. They position themselves as a broader Community Risk Reduction solution.</p>
+                
+                <h3>Review Department</h3>
+                <p>Like Brycer, IROL offers a Review Department staffed by industry professionals (Fire Marshals, Chiefs, Inspectors) who review reports and work with contractors on deficiency remediation. Claims this reduces AHJ workload by up to 60%. Free to AHJs.</p>
+
+                <div class="strengths-weaknesses">
+                    <div class="strengths">
+                        <h5>✅ Strengths</h5>
+                        <ul>
+                            <li>Broader CRR focus beyond just ITM</li>
+                            <li>GIS/geospatial technology (Esri partner)</li>
+                            <li>Free to AHJs (service provider funded)</li>
+                            <li>Includes fire alarm registration</li>
+                            <li>Review department staffed by fire pros</li>
+                            <li>Integrations with Inspect Point</li>
+                        </ul>
+                    </div>
+                    <div class="weaknesses">
+                        <h5>⚠️ Limitations</h5>
+                        <ul>
+                            <li>Smaller market presence than Brycer/LIV</li>
+                            <li>Still a point solution, not full platform</li>
+                            <li>Pre-plan features not as robust as First Due</li>
+                            <li>Data separate from fire operations</li>
+                            <li>Limited integration ecosystem</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Knowledge Check 1 -->
+        <div class="content-card">
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check #1</h3>
+                <div class="question" id="q1">
+                    <p>A service provider asks: "Do you provide inspection software so my technicians can use it in the field?" What is the correct response?</p>
+                    <div class="options">
+                        <div class="option" onclick="checkAnswer(1, this, false)">A. "Yes, First Due has a mobile app for technicians to perform inspections"</div>
+                        <div class="option" onclick="checkAnswer(1, this, true)">B. "First Due is the platform where you submit your completed reports to the AHJ. You'd continue using your inspection software like Inspect Point, and we're building API integrations so you can submit directly without manual upload."</div>
+                        <div class="option" onclick="checkAnswer(1, this, false)">C. "No, you'll need to switch to our system"</div>
+                        <div class="option" onclick="checkAnswer(1, this, false)">D. "We don't work with service providers at all"</div>
+                    </div>
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>First Due's Advantage</span>
+        </div>
+
+        <!-- Slide 10: First Due Positioning -->
+        <div class="content-card">
+            <h2>🟣 First Due: The Integrated Approach</h2>
+            
+            <div class="competitor-card firstdue">
+                <div class="competitor-header">
+                    <h4>First Due ITM</h4>
+                    <span class="competitor-tag tag-integrated">Integrated Platform</span>
+                </div>
+                <p><strong>Launched:</strong> February 2025 | <strong>Platform:</strong> Cloud-based, AI-powered Fire & EMS software</p>
+                <p><strong>Positioning:</strong> "The single solution for 3rd party inspections - as part of a complete fire prevention platform"</p>
+                
+                <h3>What Makes First Due Different</h3>
+                <p>First Due's ITM solution isn't a standalone product - it's fully integrated into First Due's comprehensive fire prevention and operations platform. Service providers upload reports (PDF + metadata) through a portal, and that data connects directly to occupancy records, inspections, permits, pre-plans, and incident response.</p>
+                
+                <h3>Key Capabilities</h3>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>📤 Service Provider Portal</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Service providers upload reports for all systems through a secure online portal. They add metadata (system type, address, inspection date, pass/fail, deficiencies) and attach their PDF report and photos. The AHJ directory ensures reports reach the right jurisdiction.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>🔌 API Integrations (In Development)</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p><strong>First Due is actively working with Service Provider software vendors</strong> to provide API access. This will allow tools like Inspect Point, ServiceTrade, and Uptick to submit reports directly to First Due - eliminating manual PDF uploads and duplicate data entry for service providers.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>🔗 Connected Data</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>ITM data automatically connects to occupancy records. When a deficiency is found, it creates inspection tasks, sends notifications, and flags the occupancy for follow-up. Responders can see system status in their pre-plan view BEFORE arriving on scene.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>📧 Automated Enforcement</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>First Due integrates with email notifications and print/mail services (like PostGrid) to automate deficiency notices, compliance letters, and follow-up communications. Track system statuses in real-time and issue remediation requests directly to businesses.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Feature Comparison -->
+        <div class="content-card">
+            <h2>📊 Feature Comparison</h2>
+            <p>Here's how First Due stacks up against the standalone AHJ platforms:</p>
+
+            <div style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>LIV</th>
+                            <th>Brycer/TCE</th>
+                            <th>IROL</th>
+                            <th>First Due</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Service Provider Portal</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Deficiency Tracking</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Automated Notifications</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Report Review Services</td>
+                            <td class="partial">Add-on</td>
+                            <td class="check">✓ Included</td>
+                            <td class="check">✓ Included</td>
+                            <td class="partial">Roadmap</td>
+                        </tr>
+                        <tr>
+                            <td>SP Software API Integrations</td>
+                            <td class="check">✓ Inspect Point</td>
+                            <td class="check">✓ Multiple</td>
+                            <td class="check">✓ Inspect Point</td>
+                            <td class="partial">In Development</td>
+                        </tr>
+                        <tr>
+                            <td>Fire Inspections Module</td>
+                            <td class="none">✗</td>
+                            <td class="none">✗</td>
+                            <td class="none">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Permitting Module</td>
+                            <td class="none">✗</td>
+                            <td class="none">✗</td>
+                            <td class="none">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Pre-Plan Integration</td>
+                            <td class="none">✗</td>
+                            <td class="none">✗</td>
+                            <td class="partial">Basic</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Incident Response Integration</td>
+                            <td class="none">✗</td>
+                            <td class="none">✗</td>
+                            <td class="none">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Single Occupancy Record</td>
+                            <td class="none">✗</td>
+                            <td class="none">✗</td>
+                            <td class="none">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Response App</td>
+                            <td class="none">✗</td>
+                            <td class="none">✗</td>
+                            <td class="none">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box success">
+                <h4>✅ The Integration Advantage</h4>
+                <p>While standalone platforms match First Due on core ITM features, they can't deliver the connected data experience. Only First Due gives responders real-time visibility into fire protection system status before they arrive on scene.</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: The Data Silo Problem -->
+        <div class="content-card">
+            <h2>🚧 The Data Silo Problem</h2>
+            <p>When an AHJ uses a standalone ITM platform alongside other fire prevention tools, they create data silos that fragment their operation:</p>
+
+            <div class="case-study">
+                <h4>📋 Scenario: Fire at ABC Manufacturing</h4>
+                <p><strong>With Standalone ITM:</strong></p>
+                <p>Engine 5 responds to a fire alarm at ABC Manufacturing. The crew checks their RMS pre-plan but sees no information about the fire protection systems. They don't know that the sprinkler system was reported as impaired three days ago in the ITM platform - because that data lives in a completely different system that operations doesn't have access to.</p>
+                <p style="margin-top: 15px;"><strong>With First Due:</strong></p>
+                <p>Engine 5 opens their First Due mobile app en route. The occupancy record shows an alert: "⚠️ Sprinkler System Impaired - Reported 3 days ago." The crew knows before arrival that they cannot rely on automatic suppression and adjusts their tactics accordingly.</p>
+            </div>
+
+            <div class="highlight-box warning">
+                <h4>⚠️ The Hidden Cost of Standalone</h4>
+                <p>Fire departments don't just need ITM compliance tracking - they need that information connected to response. Standalone platforms solve the administrative problem but miss the operational opportunity.</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Knowledge Check 2 -->
+        <div class="content-card">
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check #2</h3>
+                <div class="question" id="q2">
+                    <p>A fire department says: "Brycer reviews all reports for free and their service providers already use Inspect Point which integrates with TCE." What is the BEST response?</p>
+                    <div class="options">
+                        <div class="option" onclick="checkAnswer(2, this, false)">A. "First Due is cheaper than Brycer"</div>
+                        <div class="option" onclick="checkAnswer(2, this, false)">B. "We don't need integrations with Inspect Point"</div>
+                        <div class="option" onclick="checkAnswer(2, this, true)">C. "Those are real advantages. The question is: where does that ITM data go? With Brycer, it stays in a silo. With First Due, it connects to your occupancy records and pre-plans - so your crews know about impaired systems before they arrive. And we're building API integrations with service provider software too."</div>
+                        <div class="option" onclick="checkAnswer(2, this, false)">D. "You should keep using Brycer for ITM"</div>
+                    </div>
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>Handling Objections</span>
+        </div>
+
+        <!-- Slide 14: Objection Handling -->
+        <div class="content-card">
+            <h2>💬 Common Objections & Responses</h2>
+            <p>Click each objection to see the recommended response:</p>
+
+            <div class="objection-card">
+                <div class="objection-header" onclick="toggleObjection(this)">
+                    <h4>🗣️ "We already use LIV/Brycer/IROL"</h4>
+                    <span class="toggle">▼</span>
+                </div>
+                <div class="objection-content">
+                    <div class="objection-response">
+                        <h5>✅ Response Strategy:</h5>
+                        <p>"That's great that you've already digitized your ITM process - it shows you understand the value. The question is: where does that ITM data go? Right now, it's sitting in a separate system. Your inspectors can't see it during inspections. Your crews can't see impaired systems in their pre-plans. When you switch to First Due, all that data becomes part of your single occupancy record, connecting prevention and operations for the first time."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="objection-card">
+                <div class="objection-header" onclick="toggleObjection(this)">
+                    <h4>🗣️ "Brycer/IROL reviews reports for us"</h4>
+                    <span class="toggle">▼</span>
+                </div>
+                <div class="objection-content">
+                    <div class="objection-response">
+                        <h5>✅ Response Strategy:</h5>
+                        <p>"Report review services can reduce your staff workload - that's valuable. But you're outsourcing compliance oversight to a third party. With First Due, your team maintains control, and every action is logged in the same system as your inspections and permits. Plus, the real value isn't just reviewing reports - it's having that data connected to response. An impaired system flagged in Brycer doesn't help your crew pulling up to the building."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="objection-card">
+                <div class="objection-header" onclick="toggleObjection(this)">
+                    <h4>🗣️ "Does First Due integrate with Inspect Point?"</h4>
+                    <span class="toggle">▼</span>
+                </div>
+                <div class="objection-content">
+                    <div class="objection-response">
+                        <h5>✅ Response Strategy:</h5>
+                        <p>"We're actively working with service provider software vendors including Inspect Point to build API integrations. Our goal is to let service providers submit directly from their inspection software without manual PDF uploads. In the meantime, service providers can submit through our portal just like they do with other platforms - upload the PDF, add metadata, and they're done."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Positioning Summary -->
+        <div class="content-card">
+            <h2>🎯 Key Positioning Messages</h2>
+            
+            <div class="highlight-box success">
+                <h4>🏆 The First Due Difference</h4>
+                <p><strong>When competing against standalone ITM platforms:</strong></p>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>1️⃣ Integration Over Isolation</span>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>"Standalone platforms solve one problem but create another - data silos. First Due connects ITM to inspections, permits, pre-plans, and incident response in one platform."</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>2️⃣ Operations Meets Prevention</span>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>"Only First Due gives responders visibility into fire protection system status before they arrive. An impaired sprinkler in a standalone platform doesn't help the crew pulling up to the building."</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>3️⃣ One Platform, One Record</span>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>"Every occupancy has one complete record - ITM history, inspection results, permits, hazards, pre-plan data, and incident history. No more piecing together information from multiple systems."</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>4️⃣ API-First Future</span>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>"We're building API integrations with service provider software so they can submit directly without manual uploads. This streamlines the workflow for everyone - service providers, AHJs, and property owners."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Knowledge Check 3 -->
+        <div class="content-card">
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check #3</h3>
+                <div class="question" id="q3">
+                    <p>What is the PRIMARY limitation shared by all standalone ITM platforms (LIV, Brycer, IROL)?</p>
+                    <div class="options">
+                        <div class="option" onclick="checkAnswer(3, this, false)">A. They don't have service provider portals</div>
+                        <div class="option" onclick="checkAnswer(3, this, false)">B. They can't track deficiencies</div>
+                        <div class="option" onclick="checkAnswer(3, this, true)">C. ITM data lives in isolation - not connected to inspections, pre-plans, or operations</div>
+                        <div class="option" onclick="checkAnswer(3, this, false)">D. They don't integrate with service provider software</div>
+                    </div>
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Summary -->
+        <div class="content-card">
+            <h2>📝 Module 2 Summary</h2>
+            
+            <div class="learning-objectives">
+                <h3>🎯 Key Takeaways</h3>
+                <ul>
+                    <li><strong>Two Types of Software:</strong> Service Provider Inspection Software (Inspect Point, ServiceTrade, Uptick) vs. AHJ Compliance Platforms (LIV, Brycer, IROL, First Due)</li>
+                    <li><strong>AHJ Platforms Receive Reports:</strong> They don't provide inspection software - service providers upload PDFs and metadata</li>
+                    <li><strong>Standalone Limitation:</strong> LIV, Brycer, and IROL create data silos - ITM data doesn't connect to inspections, pre-plans, or operations</li>
+                    <li><strong>First Due Advantage:</strong> ITM is part of a complete platform where data connects to the entire prevention and response workflow</li>
+                    <li><strong>API Strategy:</strong> First Due is building integrations with service provider software to eliminate manual uploads</li>
+                    <li><strong>Positioning:</strong> We're not just an ITM platform - we're the single source of truth for fire prevention and operations</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>🚀 Next Steps</h4>
+                <p>In <strong>Module 3: First Due ITM Deep Dive</strong>, we'll explore the specific features and workflows of First Due's ITM solution so you can demo it effectively.</p>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn prev">← Module 1: ITM Fundamentals</button>
+            <button class="nav-btn next">Module 3: First Due Deep Dive →</button>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                content.classList.toggle('show');
+            });
+        });
+
+        function toggleObjection(header) {
+            header.classList.toggle('active');
+            const content = header.nextElementSibling;
+            content.classList.toggle('show');
+        }
+
+        function checkAnswer(questionNum, element, isCorrect) {
+            const options = element.parentElement.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                opt.classList.remove('correct', 'incorrect');
+            });
+            
+            if (isCorrect) {
+                element.classList.add('correct');
+                showFeedback(questionNum, true);
+            } else {
+                element.classList.add('incorrect');
+                options.forEach(opt => {
+                    if (opt.onclick.toString().includes('true')) {
+                        opt.classList.add('correct');
+                    }
+                });
+                showFeedback(questionNum, false);
+            }
+        }
+
+        function showFeedback(questionNum, isCorrect) {
+            const feedback = document.getElementById('feedback' + questionNum);
+            feedback.classList.add('show');
+            
+            if (isCorrect) {
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                const messages = {
+                    1: "Correct! First Due is an AHJ platform for receiving reports, not service provider inspection software. Service providers continue using their tools and submit to First Due - and API integrations will make this even easier.",
+                    2: "Correct! Acknowledge their advantages, then pivot to integration. The key message: managed services help with workload, but connected data transforms operations.",
+                    3: "Correct! All three standalone platforms offer solid ITM functionality, but data exists in isolation. This is the core limitation First Due addresses through integration."
+                };
+                feedback.textContent = "✓ " + messages[questionNum];
+            } else {
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+                feedback.textContent = "✗ Not quite. Review the section above and try again.";
+            }
+        }
+    </script>
+</body>
+</html>ROL is free to us"</h4>
+                    <span class="toggle">▼</span>
+                </div>
+                <div class="objection-content">
+                    <div class="objection-response">
+                        <h5>✅ Response Strategy:</h5>
+                        <p>"You're right - they fund their platform through service provider fees, so there's no direct cost to the AHJ. But consider the total picture: you still need separate systems for inspections, permits, pre-plans, and incident reporting. Each system means another login, another data silo, and manual work to piece information together. First Due consolidates everything. The question isn't what ITM costs in isolation - it's the total cost of running fragmented systems versus one integrated platform."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="objection-card">
+                <div class="objection-header" onclick="toggleObjection(this)">
+                    <h4>🗣️ "Our service providers already submit to Brycer"</h4>
+                    <span class="toggle">▼</span>
+                </div>
+                <div class="objection-content">
+                    <div class="objection-response">
+                        <h5>✅ Response Strategy:</h5>
+                        <p>"Service providers work with whatever platform the AHJ requires - that's the nature of the business. They submit to different platforms in different jurisdictions every day. The submission process is the same: upload a PDF, add metadata, done. And we're building API integrations with service provider software like Inspect Point so they can submit directly without manual uploads. Service providers follow the AHJ, not the other way around."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="objection-card">
+                <div class="objection-header" onclick="toggleObjection(this)">
+                    <h4>🗣️ "Brycer/I
