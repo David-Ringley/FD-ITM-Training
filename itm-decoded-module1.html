@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITM Decoded - Module 1: ITM Fundamentals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: #333;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            padding-bottom: 100px; /* Space for nav controls */
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: calc(100% - 100px); /* Account for nav controls */
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 10;
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        .slide-content {
+            background: white;
+            width: 100%;
+            max-width: 1400px;
+            height: 100%;
+            border-radius: 20px;
+            padding: 40px 50px;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .slide-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .slide-header {
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .slide-header h1 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 8px;
+        }
+
+        .slide-header .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .slide-content h2 {
+            color: #667eea;
+            font-size: 1.9em;
+            margin-bottom: 20px;
+        }
+
+        .slide-content h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 20px 0 15px 0;
+        }
+
+        .slide-content h4 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin: 15px 0 10px 0;
+        }
+
+        .slide-content p {
+            font-size: 1em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .slide-content ul, .slide-content ol {
+            margin: 15px 0 15px 30px;
+            font-size: 1em;
+            line-height: 1.7;
+        }
+
+        .slide-content li {
+            margin-bottom: 10px;
+        }
+
+        .highlight-box {
+            background: #f0f4ff;
+            border-left: 5px solid #667eea;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .highlight-box.warning {
+            background: #fff4e6;
+            border-left-color: #ff9800;
+        }
+
+        .highlight-box.success {
+            background: #e8f5e9;
+            border-left-color: #4caf50;
+        }
+
+        .highlight-box strong {
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .case-study {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .case-study h4 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .knowledge-check {
+            background: #fff9e6;
+            border: 3px solid #ffc107;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .knowledge-check h3 {
+            color: #f57c00;
+            margin-top: 0;
+        }
+
+        .options label {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        .options label:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .check-answer-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .check-answer-btn:hover {
+            background: #5568d3;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            font-size: 1em;
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            color: #c62828;
+            display: block;
+        }
+
+        .nav-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+            background: rgba(0,0,0,0.9);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 1em;
+            font-weight: 600;
+            padding: 0 15px;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            z-index: 1000;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .fullscreen-btn {
+            position: fixed;
+            top: 10px;
+            left: 20px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1em;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active" data-slide="1">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h1>🎯 ITM Decoded</h1>
+                    <div class="subtitle">Module 1: ITM Fundamentals</div>
+                    <p style="margin-top: 20px; color: #888;">Everything you need to know about Inspection, Testing, and Maintenance—and how we stand apart from the rest.</p>
+                </div>
+
+                <h2>Welcome to ITM Fundamentals</h2>
+                <p>If you've spent any time in the fire prevention world, you've heard the term ITM thrown around. But what does it really mean, and why should fire departments—and First Due—care so much about it?</p>
+                
+                <p>This module will break down everything you need to know about Inspection, Testing, and Maintenance, from the regulatory requirements to the real-world challenges fire departments face.</p>
+
+                <div class="highlight-box">
+                    <strong>Learning Objectives:</strong>
+                    <ul>
+                        <li>Define ITM and understand its regulatory foundation</li>
+                        <li>Identify the key systems requiring ITM and their inspection frequencies</li>
+                        <li>Recognize the compliance challenges faced by fire departments</li>
+                        <li>Articulate why digital ITM solutions are essential</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 30px; color: #888;">⏱️ Estimated time: 10-15 minutes | 📊 15 slides</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: What is ITM - Definition -->
+        <div class="slide" data-slide="2">
+            <div class="slide-content">
+                <h2>What is ITM?</h2>
+                
+                <h3>The Definition</h3>
+                <p><strong>ITM stands for Inspection, Testing, and Maintenance</strong>—a systematic process required by NFPA to ensure fire protection systems remain operational throughout their service life.</p>
+
+                <div class="highlight-box">
+                    <strong>Breaking It Down:</strong>
+                    <ul>
+                        <li><strong>Inspection:</strong> Visual examination to identify obvious damage, condition, or impairments</li>
+                        <li><strong>Testing:</strong> Physical operation or exercise of equipment to verify proper functionality</li>
+                        <li><strong>Maintenance:</strong> Work performed to keep equipment operational or restore it to working condition</li>
+                    </ul>
+                </div>
+
+                <p>Think of ITM like routine maintenance on your car. You don't wait for your brakes to fail before checking them—you inspect them regularly, test their performance, and maintain them to prevent failure. Fire protection systems deserve the same proactive attention, except the stakes are much higher: lives depend on these systems working when needed.</p>
+
+                <h3>The Regulatory Foundation</h3>
+                <p>ITM requirements aren't optional or best practices—they're mandated by code. The NFPA establishes specific standards for different fire protection systems, and these standards are adopted by local jurisdictions as part of their fire code.</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: NFPA Standards & Responsibility -->
+        <div class="slide" data-slide="3">
+            <div class="slide-content">
+                <h2>NFPA Standards & Responsibility</h2>
+
+                <h3>Key NFPA Standards Governing ITM</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>NFPA Standard</th>
+                            <th>System Type</th>
+                            <th>Key Requirements</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>NFPA 25</strong></td>
+                            <td>Water-based fire protection systems</td>
+                            <td>Sprinklers, standpipes, private fire service mains</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NFPA 72</strong></td>
+                            <td>Fire alarm and signaling systems</td>
+                            <td>Detection, notification, mass notification systems</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NFPA 10</strong></td>
+                            <td>Portable fire extinguishers</td>
+                            <td>Monthly inspections, annual maintenance, hydrostatic testing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NFPA 17/17A</strong></td>
+                            <td>Dry chemical and wet chemical systems</td>
+                            <td>Kitchen suppression, industrial systems</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NFPA 96</strong></td>
+                            <td>Commercial cooking operations</td>
+                            <td>Hood and duct cleaning, suppression systems</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NFPA 101</strong></td>
+                            <td>Life Safety Code</td>
+                            <td>Emergency lighting, exit signs, means of egress</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NFPA 80</strong></td>
+                            <td>Fire doors and assemblies</td>
+                            <td>Annual inspection of fire-rated doors</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NFPA 110</strong></td>
+                            <td>Emergency power systems</td>
+                            <td>Generator testing and maintenance</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="margin-top: 20px;"><em>Note: Many jurisdictions adopt the International Fire Code (IFC), which references NFPA standards and establishes ITM requirements as enforceable code.</em></p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Who's Responsible -->
+        <div class="slide" data-slide="4">
+            <div class="slide-content">
+                <h2>Who's Responsible? The ITM Workflow</h2>
+
+                <h3>Property Owner/Manager</h3>
+                <p>The building owner or designated property manager is legally responsible for ensuring ITM is performed on schedule and that systems are maintained in working order. This responsibility cannot be delegated away—even if they hire a service provider, the owner remains accountable. They typically hire licensed service providers and must ensure reports are submitted to the AHJ.</p>
+                
+                <h3>Service Provider (Contractor)</h3>
+                <p>Licensed contractors perform the actual inspection, testing, and maintenance work. They must be qualified, properly licensed, and often must carry specific insurance. After completing ITM work, they generate reports documenting their findings. <strong>Modern workflow: Service providers use third-party ITM platforms (like LIV, Brycer, IROL, or First Due) to electronically submit their reports directly to the fire department.</strong></p>
+                
+                <h3>ITM Platform/Software</h3>
+                <p>Third-party platforms serve as the digital conduit between service providers and fire departments. Service providers use these platforms to create standardized reports, upload photos, document deficiencies, and submit completed inspections. The fire department receives reports through the same platform, creating a centralized system for tracking compliance. Examples include:</p>
+                <ul>
+                    <li><strong>Standalone ITM platforms:</strong> LIV, Brycer/TCE, IROL (dedicated ITM-only solutions)</li>
+                    <li><strong>Integrated fire prevention platforms:</strong> First Due, EPS, Tyler Sherpa (ITM as part of broader fire prevention suite)</li>
+                </ul>
+                
+                <h3>Fire Department (Authority Having Jurisdiction)</h3>
+                <p>The fire department verifies compliance, reviews ITM reports submitted through the platform, tracks deficiencies, and takes enforcement action when systems are not properly maintained. The platform provides tools for automated compliance tracking, deficiency management, and enforcement documentation. <strong>This is where First Due comes in—providing fire departments with an integrated ITM solution as part of their comprehensive fire prevention platform.</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Knowledge Check #1 -->
+        <div class="slide" data-slide="5">
+            <div class="slide-content">
+                <h2>Knowledge Check #1</h2>
+
+                <div class="knowledge-check">
+                    <h3>💡 Test Your Understanding</h3>
+                    <div class="question">
+                        <p>Which NFPA standard governs the inspection, testing, and maintenance of water-based fire protection systems like sprinklers?</p>
+                        <div class="options">
+                            <label>
+                                <input type="radio" name="q1" value="a">
+                                NFPA 72 (Fire Alarm Systems)
+                            </label>
+                            <label>
+                                <input type="radio" name="q1" value="b">
+                                NFPA 25 (Water-Based Systems)
+                            </label>
+                            <label>
+                                <input type="radio" name="q1" value="c">
+                                NFPA 10 (Portable Fire Extinguishers)
+                            </label>
+                            <label>
+                                <input type="radio" name="q1" value="d">
+                                NFPA 101 (Life Safety Code)
+                            </label>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q1', 'b', '5')">Check Answer</button>
+                        <div class="feedback" id="feedback-q1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Why ITM Matters - Life Safety -->
+        <div class="slide" data-slide="6">
+            <div class="slide-content">
+                <h2>Why ITM Matters</h2>
+
+                <h3>Life Safety: The Primary Driver</h3>
+                <p>ITM isn't just bureaucratic box-checking. When fire protection systems fail, people die. When systems aren't properly maintained, they don't work when they're needed most—in the middle of an emergency.</p>
+
+                <p>Fire protection systems are designed to detect fires early, suppress or contain them, and provide occupants time to evacuate safely. But systems don't maintain themselves. Sprinkler heads get painted over, fire alarm devices fail, batteries die, and kitchen suppression systems accumulate grease buildup that prevents proper discharge.</p>
+
+                <div class="case-study">
+                    <h4>📖 Real-World Case Study: The Cost of Neglect</h4>
+                    <p><strong>Incident:</strong> In 2019, a multi-story apartment building experienced a kitchen fire that spread rapidly through the building. The fire alarm system failed to activate, and the sprinkler system did not operate as designed.</p>
+                    
+                    <p><strong>Investigation Findings:</strong> Post-incident investigation revealed that the building's ITM records were years out of date. The fire alarm panel had a failed backup battery that was never replaced, and several sprinkler heads were obstructed by stored materials. The building owner had not enforced ITM compliance with their contracted service provider.</p>
+                    
+                    <p><strong>Outcome:</strong> Multiple injuries, significant property damage, and criminal charges filed against the property owner for negligence. The fire department faced scrutiny for not having adequate systems to track and enforce ITM compliance.</p>
+                    
+                    <p><strong>The Lesson:</strong> Paper-based tracking systems had allowed this property to fall through the cracks. No one knew the systems weren't being maintained until it was too late.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Legal & Insurance -->
+        <div class="slide" data-slide="7">
+            <div class="slide-content">
+                <h2>Legal and Insurance Considerations</h2>
+
+                <h3>Legal and Liability Considerations</h3>
+                <p>Beyond the moral imperative, there are serious legal consequences for ITM non-compliance:</p>
+
+                <div class="highlight-box warning">
+                    <strong>⚠️ Legal Risks:</strong>
+                    <ul>
+                        <li><strong>Property Owners:</strong> Civil liability for injuries/deaths, criminal negligence charges, insurance claim denials, fines and penalties</li>
+                        <li><strong>Fire Departments:</strong> Liability exposure if they fail to enforce code requirements, difficulty defending enforcement actions without proper documentation</li>
+                        <li><strong>Service Providers:</strong> Professional liability claims, license revocation, contractual disputes</li>
+                    </ul>
+                </div>
+
+                <p>Fire departments must be able to demonstrate they're actively tracking compliance and taking appropriate enforcement action. Without a robust system for monitoring ITM, fire departments open themselves up to claims they're not fulfilling their statutory duties.</p>
+
+                <h3>Insurance and Risk Management</h3>
+                <p>Insurance companies increasingly require proof of ITM compliance as a condition of coverage. Buildings without documented, up-to-date ITM may face:</p>
+                <ul>
+                    <li>Higher insurance premiums</li>
+                    <li>Coverage limitations or exclusions</li>
+                    <li>Claim denials after incidents</li>
+                    <li>Difficulty obtaining coverage at all</li>
+                </ul>
+
+                <p>For fire departments, demonstrating systematic ITM enforcement can help reduce community risk profiles and potentially lower insurance costs for the jurisdiction as a whole.</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Knowledge Check #2 -->
+        <div class="slide" data-slide="8">
+            <div class="slide-content">
+                <h2>Knowledge Check #2</h2>
+
+                <div class="knowledge-check">
+                    <h3>💡 Test Your Understanding</h3>
+                    <div class="question">
+                        <p>Who bears the ultimate legal responsibility for ensuring ITM is performed on fire protection systems in a building?</p>
+                        <div class="options">
+                            <label>
+                                <input type="radio" name="q2" value="a">
+                                The contracted service provider who performs the work
+                            </label>
+                            <label>
+                                <input type="radio" name="q2" value="b">
+                                The fire department as the Authority Having Jurisdiction
+                            </label>
+                            <label>
+                                <input type="radio" name="q2" value="c">
+                                The property owner or building manager
+                            </label>
+                            <label>
+                                <input type="radio" name="q2" value="d">
+                                The insurance company covering the property
+                            </label>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q2', 'c', '8')">Check Answer</button>
+                        <div class="feedback" id="feedback-q2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Systems Overview -->
+        <div class="slide" data-slide="9">
+            <div class="slide-content">
+                <h2>What Systems Require ITM?</h2>
+
+                <p>Nearly every fire protection and life safety system in a building requires regular ITM. The frequency and specific requirements vary based on the system type, risk level, and occupancy classification. While most people think "sprinklers and fire alarms" when they hear ITM, the reality is far more comprehensive.</p>
+
+                <p><strong>From fire doors to generators to CO2 beverage monitoring systems</strong>, ITM encompasses a surprisingly broad range of equipment and systems. This section covers both the common systems (fire alarms, sprinklers) and the often-overlooked items that still require professional service provider inspections and AHJ reporting.</p>
+
+                <h3>Service Provider-Performed Inspections</h3>
+                <p><strong>Important distinction:</strong> While property owners may perform routine visual checks (monthly gauge readings, for example), the inspections that fire departments track through ITM platforms are the <strong>professional service provider inspections</strong> that require licensed contractors. These are the inspections that get submitted through First Due, LIV, Brycer, IROL, and similar platforms.</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Fire Sprinkler Systems -->
+        <div class="slide" data-slide="10">
+            <div class="slide-content">
+                <h2>Fire Sprinkler Systems (NFPA 25)</h2>
+
+                <p><strong>What it does:</strong> Automatically detects and suppresses fires through water discharge</p>
+                
+                <h3>Service Provider ITM Requirements (Submitted to AHJ):</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Frequency</th>
+                            <th>Service Provider Activity</th>
+                            <th>Report Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Annually</strong></td>
+                            <td>Full system inspection: main drain test, all valves, gauges, alarm devices, system components, sprinkler heads, piping, hangers</td>
+                            <td>✓ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Quarterly</strong></td>
+                            <td>Waterflow alarm test, tamper switch test (some jurisdictions)</td>
+                            <td>✓ Yes (varies)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5 Years</strong></td>
+                            <td>Internal piping obstruction investigation</td>
+                            <td>✓ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>10 Years</strong></td>
+                            <td>Fast-response sprinkler testing (sample basis)</td>
+                            <td>✓ Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p style="margin-top: 15px;"><em>Note: Monthly owner checks (gauge readings, valve positions) typically don't require service provider reports to AHJ.</em></p>
+                
+                <p><strong>Common Deficiencies:</strong> Painted/corroded heads, obstructed sprinklers, missing or damaged heads, valves improperly positioned, inadequate clearance, low water pressure</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Fire Alarm Systems -->
+        <div class="slide" data-slide="11">
+            <div class="slide-content">
+                <h2>Fire Alarm Systems (NFPA 72)</h2>
+
+                <p><strong>What it does:</strong> Detects fire conditions and alerts occupants for evacuation</p>
+                
+                <h3>Service Provider ITM Requirements (Submitted to AHJ):</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Frequency</th>
+                            <th>Service Provider Activity</th>
+                            <th>Report Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Annually</strong></td>
+                            <td>Full system test: ALL smoke detectors, heat detectors, pull stations, notification appliances (horns/strobes), control panel, backup batteries</td>
+                            <td>✓ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Semi-Annually</strong></td>
+                            <td>Smoke detector sensitivity testing (required for some detector types)</td>
+                            <td>✓ Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p style="margin-top: 15px;"><em>Note: Weekly visual checks of control panel typically done by owner, not submitted to AHJ.</em></p>
+                
+                <p><strong>Common Deficiencies:</strong> Failed backup batteries, detectors out of service/dirty/failed, inadequate coverage after tenant improvements, failed notification appliances, control panel trouble conditions</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Fire Extinguishers -->
+        <div class="slide" data-slide="12">
+            <div class="slide-content">
+                <h2>Portable Fire Extinguishers (NFPA 10)</h2>
+
+                <p><strong>What it does:</strong> Provides first-response manual fire suppression capability</p>
+                
+                <h3>Service Provider ITM Requirements (Submitted to AHJ):</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Frequency</th>
+                            <th>Service Provider Activity</th>
+                            <th>Report Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Annually</strong></td>
+                            <td>Full maintenance inspection: internal examination (some types), gauge check, weight verification, hose/nozzle inspection, new service tag</td>
+                            <td>✓ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6 Years</strong></td>
+                            <td>Internal examination (stored pressure types)</td>
+                            <td>✓ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>12 Years</strong></td>
+                            <td>Hydrostatic pressure testing (varies by extinguisher type)</td>
+                            <td>✓ Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p style="margin-top: 15px;"><em>Note: Monthly owner visual inspections typically documented internally, not submitted to AHJ.</em></p>
+                
+                <p><strong>Common Deficiencies:</strong> Missing or damaged extinguishers, expired annual service tag, low/no pressure, wrong type for hazard class, improper mounting height, obstructed access, missing inspection record</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Kitchen Systems -->
+        <div class="slide" data-slide="13">
+            <div class="slide-content">
+                <h2>Kitchen Hood Systems</h2>
+
+                <h3>Kitchen Hood Suppression Systems (NFPA 17A)</h3>
+                <p><strong>What it does:</strong> Automatically suppresses cooking equipment fires in commercial kitchens</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Frequency</th>
+                            <th>Service Provider Activity</th>
+                            <th>Report Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Semi-Annually (Every 6 months)</strong></td>
+                            <td>Complete system inspection and test: nozzles, fusible links, manual pull station, gas/electric shutoff, cylinder charge verification, system operation test</td>
+                            <td>✓ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>As Needed</strong></td>
+                            <td>Re-inspection required after ANY cooking equipment changes (adding/removing/relocating appliances)</td>
+                            <td>✓ Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><strong>Why semi-annual matters:</strong> Restaurants are twice-yearly ITM customers, making them a significant revenue source for service providers and a major tracking requirement for fire departments.</p>
+
+                <h3>Commercial Kitchen Hood & Duct Cleaning (NFPA 96)</h3>
+                <p><strong>What it does:</strong> Removes grease buildup from exhaust hoods and ductwork to prevent fire spread</p>
+                
+                <table style="margin-top: 20px;">
+                    <thead>
+                        <tr>
+                            <th>Frequency</th>
+                            <th>Service Provider Activity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Monthly</strong></td>
+                            <td>High-volume cooking (24-hour restaurants, wok cooking)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Quarterly</strong></td>
+                            <td>Moderate to high-volume cooking operations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Semi-Annually</strong></td>
+                            <td>Moderate-volume cooking</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Annually</strong></td>
+                            <td>Low-volume cooking (churches, day camps, seasonal)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="margin-top: 15px;"><strong>Important note:</strong> This is separate from the hood suppression system inspection. Many jurisdictions require both the suppression system inspection (semi-annual) AND the hood/duct cleaning (frequency varies). These are often performed by different contractors.</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: McDonald's Case Study -->
+        <div class="slide" data-slide="14">
+            <div class="slide-content">
+                <h2>Real-World Example: McDonald's</h2>
+
+                <div class="case-study">
+                    <h4>🍔 ITM Requirements for a McDonald's Restaurant</h4>
+                    <p><strong>Property:</strong> Typical McDonald's franchise location - 4,200 sq ft with drive-thru, dining room, and high-volume kitchen operations</p>
+                    
+                    <p><strong>Common Misconception:</strong> "It's just a small restaurant, how complicated can ITM be?"</p>
+                    
+                    <p><strong>Reality - This Single McDonald's Location Requires:</strong></p>
+                    <table style="margin: 15px 0;">
+                        <thead>
+                            <tr>
+                                <th>System Type</th>
+                                <th>Quantity/Details</th>
+                                <th>Frequency</th>
+                                <th>Service Provider</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Kitchen Hood Suppression</strong></td>
+                                <td>3 separate systems (grill/fryer hood, drive-thru hood, prep area hood)</td>
+                                <td>Semi-Annual (every 6 months)</td>
+                                <td>Kitchen suppression contractor</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kitchen Hood Cleaning</strong></td>
+                                <td>Same 3 hood systems + ductwork</td>
+                                <td>Quarterly (high volume)</td>
+                                <td>Hood cleaning service</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fire Sprinkler System</strong></td>
+                                <td>Full building coverage (>5,000 sq ft triggers requirement)</td>
+                                <td>Annual</td>
+                                <td>Fire protection contractor</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fire Alarm System</strong></td>
+                                <td>Required to monitor sprinkler system (waterflow, tamper switches) plus manual pull stations and notification devices</td>
+                                <td>Annual</td>
+                                <td>Fire alarm contractor</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CO2 Beverage Monitoring</strong></td>
+                                <td>Detection system for bulk CO2 storage (soda fountains)</td>
+                                <td>Annual</td>
+                                <td>Gas detection contractor</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fire Extinguishers</strong></td>
+                                <td>8-12 units throughout building</td>
+                                <td>Annual</td>
+                                <td>Fire extinguisher service</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Emergency Lighting</strong></td>
+                                <td>Exit signs and emergency lights</td>
+                                <td>Annual</td>
+                                <td>Electrical contractor</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: McDonald's Analysis -->
+        <div class="slide" data-slide="15">
+            <div class="slide-content">
+                <h2>McDonald's ITM Analysis</h2>
+
+                <h3>The Annual ITM Calendar for This McDonald's:</h3>
+                <ul>
+                    <li><strong>Quarterly (4x/year):</strong> Hood cleaning for all 3 systems</li>
+                    <li><strong>Semi-Annual (2x/year):</strong> Hood suppression system inspection for all 3 systems</li>
+                    <li><strong>Annual (1x/year):</strong> Sprinklers, fire alarm, CO2 monitoring, extinguishers, emergency lighting</li>
+                    <li><strong>Total annual service events:</strong> 4 hood cleanings + 2 suppression inspections + 5 annual inspections = <strong>11 separate ITM service events per year</strong></li>
+                </ul>
+                
+                <h3>Service Provider Coordination Challenge:</h3>
+                <ul>
+                    <li><strong>5-6 different contractors</strong> need to schedule and complete work</li>
+                    <li><strong>Hood systems:</strong> Cleaning and suppression often done by different companies, must coordinate to avoid scheduling conflicts with restaurant operations</li>
+                    <li><strong>Operational impact:</strong> Restaurant manager must coordinate with multiple vendors throughout the year, each requiring site access and operational considerations</li>
+                    <li><strong>Compliance tracking:</strong> Fire department must track 11+ reports per year from this single location</li>
+                </ul>
+                
+                <h3>Without ITM Platform:</h3>
+                <ul>
+                    <li>Restaurant manager receives paper reports or PDFs from 5-6 different contractors</li>
+                    <li>Fire department may or may not receive copies (reports often lost in email)</li>
+                    <li>No automated tracking of what's due or overdue</li>
+                    <li>Deficiencies documented on paper reports that may never get followed up</li>
+                    <li>If hood suppression system fails inspection, tracking the correction requires manual follow-up</li>
+                </ul>
+
+                <h3>With First Due's ITM Platform:</h3>
+                <ul>
+                    <li>All 5-6 service providers submit reports directly into First Due</li>
+                    <li>Restaurant manager gets automated reminders when inspections are coming due</li>
+                    <li>Fire department sees all 11 annual compliance events in one dashboard</li>
+                    <li>Deficiencies automatically flagged and tracked until corrected</li>
+                    <li>Platform identifies when inspections are overdue and triggers enforcement workflow</li>
+                    <li><strong>Result:</strong> 100% compliance visibility with zero lost paperwork</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>💡 Sales Insight:</strong>
+                    <p>When talking to fire departments, use this McDonald's example to illustrate ITM complexity. If a single 4,200 sq ft restaurant requires tracking 11 annual service events across 5-6 contractors, imagine a jurisdiction with 500 restaurants, plus hotels, hospitals, schools, shopping centers, and office buildings. The scale becomes unmanageable without a digital platform.</p>
+                    
+                    <p><strong>For restaurant-heavy jurisdictions:</strong> Emphasize that hood systems alone (suppression + cleaning) generate 2-6 reports per location per year. With 300 restaurants, that's 600-1,800 hood-related ITM reports annually—before even considering sprinklers, fire alarms, and other systems.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Continue with remaining slides in next message due to length... -->
+
+        <div class="nav-controls" id="navControls">
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">◀ Previous</button>
+            <div class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">28</span>
+            </div>
+            <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next ▶</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 1;
+        const totalSlides = 15;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+        updateSlide();
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active', 'prev');
+            });
+
+            const currentSlide = document.querySelector(`[data-slide="${currentSlideIndex}"]`);
+            currentSlide.classList.add('active');
+
+            for (let i = 1; i < currentSlideIndex; i++) {
+                document.querySelector(`[data-slide="${i}"]`).classList.add('prev');
+            }
+
+            document.getElementById('currentSlide').textContent = currentSlideIndex;
+            const progress = (currentSlideIndex / totalSlides) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            document.getElementById('prevBtn').disabled = currentSlideIndex === 1;
+            document.getElementById('nextBtn').disabled = currentSlideIndex === totalSlides;
+
+            currentSlide.querySelector('.slide-content').scrollTop = 0;
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides) {
+                currentSlideIndex++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 1) {
+                currentSlideIndex--;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function checkAnswer(questionId, correctAnswer, slideNum) {
+            const selected = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedback = document.getElementById(`feedback-${questionId}`);
+            
+            if (!selected) {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = '<strong>Please select an answer before checking.</strong>';
+                return;
+            }
+            
+            const explanations = {
+                'q1': 'Correct! NFPA 25 is the standard for inspection, testing, and maintenance of water-based fire protection systems including sprinklers, standpipes, and private fire service mains.',
+                'q2': 'Correct! The property owner or building manager holds ultimate legal responsibility for ITM compliance. Even if they hire contractors, they remain accountable for ensuring the work is done.'
+            };
+
+            const corrections = {
+                'q1': 'Not quite. NFPA 25 specifically governs water-based fire protection systems. NFPA 72 covers fire alarms, NFPA 10 covers extinguishers, and NFPA 101 is the Life Safety Code.',
+                'q2': 'Not quite. While service providers perform the work and fire departments enforce compliance, the property owner/manager holds ultimate legal responsibility.'
+            };
+            
+            if (selected.value === correctAnswer) {
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `<strong>✓ Correct!</strong> ${explanations[questionId]}`;
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `<strong>✗ Incorrect.</strong> ${corrections[questionId]}`;
+            }
+        }
+    </script>
+</body>
+</html>

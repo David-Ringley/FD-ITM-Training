@@ -1,0 +1,2225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4: Real-World Case Studies & Scenarios</title>
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d1b4e 50%, #1e1e2e 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+        
+        .slide-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+        
+        .slide {
+            display: none;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 16px;
+            padding: 50px;
+            min-height: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            color: #1a1a2e;
+            position: relative;
+        }
+        
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-header {
+            border-bottom: 3px solid #6c5ce7;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .slide-number {
+            font-size: 0.85rem;
+            color: #6c5ce7;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            color: #1a1a2e;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 1.6rem;
+            color: #2d1b4e;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.2rem;
+            color: #6c5ce7;
+            margin: 15px 0 10px 0;
+            font-weight: 600;
+        }
+        
+        h4 {
+            font-size: 1rem;
+            color: #2d1b4e;
+            margin-bottom: 8px;
+        }
+        
+        p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 20px 0;
+        }
+        
+        .content-card {
+            background: linear-gradient(145deg, #f8f9ff 0%, #f0f1f8 100%);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #6c5ce7;
+        }
+        
+        .content-card.highlight {
+            background: linear-gradient(145deg, #6c5ce7 0%, #5541d7 100%);
+            color: white;
+            border-left: none;
+        }
+        
+        .content-card.highlight h3,
+        .content-card.highlight h4 {
+            color: rgba(255,255,255,0.95);
+        }
+        
+        .content-card.highlight p,
+        .content-card.highlight li {
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .content-card.success {
+            border-left-color: #00b894;
+            background: linear-gradient(145deg, rgba(0, 184, 148, 0.1) 0%, rgba(0, 184, 148, 0.05) 100%);
+        }
+        
+        .content-card.success h3 { color: #00b894; }
+        
+        .content-card.warning {
+            border-left-color: #fdcb6e;
+            background: linear-gradient(145deg, rgba(253, 203, 110, 0.1) 0%, rgba(253, 203, 110, 0.05) 100%);
+        }
+        
+        .content-card.warning h3 { color: #e17055; }
+        
+        .content-card.info {
+            border-left-color: #74b9ff;
+            background: linear-gradient(145deg, rgba(116, 185, 255, 0.1) 0%, rgba(116, 185, 255, 0.05) 100%);
+        }
+        
+        .content-card.info h3 { color: #0984e3; }
+        
+        .content-card.before {
+            border-left-color: #e74c3c;
+        }
+        .content-card.before h3 { color: #e74c3c; }
+        
+        .content-card.after {
+            border-left-color: #00b894;
+        }
+        .content-card.after h3 { color: #00b894; }
+        
+        .feature-list {
+            list-style: none;
+            margin-top: 10px;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0 8px 28px;
+            position: relative;
+            font-size: 0.95rem;
+            color: #444;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.1);
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #6c5ce7;
+            font-weight: bold;
+        }
+        
+        .case-study-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(145deg, rgba(108, 92, 231, 0.1) 0%, rgba(93, 65, 215, 0.1) 100%);
+            border-radius: 12px;
+        }
+        
+        .case-icon {
+            font-size: 3rem;
+        }
+        
+        .case-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .meta-tag {
+            background: rgba(108, 92, 231, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #6c5ce7;
+            font-weight: 600;
+        }
+        
+        .scenario-box {
+            background: rgba(116, 185, 255, 0.1);
+            border: 2px solid #74b9ff;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .scenario-box.objection {
+            border-color: #e17055;
+            background: rgba(225, 112, 85, 0.1);
+        }
+        
+        .scenario-box.response {
+            border-color: #00b894;
+            background: rgba(0, 184, 148, 0.1);
+        }
+        
+        .scenario-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .scenario-label.objection { color: #e17055; }
+        .scenario-label.response { color: #00b894; }
+        .scenario-label.scenario { color: #6c5ce7; }
+        
+        .talk-track {
+            background: linear-gradient(145deg, rgba(0, 184, 148, 0.1) 0%, rgba(0, 184, 148, 0.05) 100%);
+            border-left: 4px solid #00b894;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 15px 0;
+        }
+        
+        .talk-track h4 {
+            color: #00b894;
+            margin-bottom: 10px;
+        }
+        
+        .talk-track p {
+            font-style: italic;
+            color: #444;
+            margin: 0;
+        }
+        
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(145deg, #6c5ce7 0%, #5541d7 100%);
+            border-radius: 12px;
+            color: white;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        .workflow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(145deg, #f8f9ff 0%, #f0f1f8 100%);
+            border-radius: 12px;
+        }
+        
+        .workflow-step {
+            text-align: center;
+            padding: 15px;
+            background: rgba(108, 92, 231, 0.1);
+            border-radius: 8px;
+            min-width: 100px;
+        }
+        
+        .workflow-arrow {
+            color: #6c5ce7;
+            font-size: 1.5rem;
+        }
+        
+        .demo-tip {
+            background: linear-gradient(145deg, rgba(253, 203, 110, 0.15) 0%, rgba(253, 203, 110, 0.05) 100%);
+            border-left: 4px solid #fdcb6e;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 15px 0;
+        }
+        
+        .demo-tip h4 {
+            color: #e17055;
+            margin-bottom: 10px;
+        }
+        
+        .persona-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: linear-gradient(145deg, #f8f9ff 0%, #f0f1f8 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+        
+        .persona-icon {
+            font-size: 2.5rem;
+            background: rgba(108, 92, 231, 0.1);
+            padding: 15px;
+            border-radius: 50%;
+        }
+        
+        .persona-content {
+            flex: 1;
+        }
+        
+        .quote-box {
+            background: linear-gradient(145deg, #f8f9ff 0%, #f0f1f8 100%);
+            border-left: 4px solid #6c5ce7;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+        
+        .knowledge-check {
+            background: linear-gradient(145deg, rgba(108, 92, 231, 0.1) 0%, rgba(93, 65, 215, 0.1) 100%);
+            border: 2px solid #6c5ce7;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .knowledge-check h3 {
+            color: #6c5ce7;
+            margin-top: 0;
+        }
+        
+        .quiz-option {
+            display: block;
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #444;
+        }
+        
+        .quiz-option:hover {
+            background: rgba(108, 92, 231, 0.1);
+            border-color: #6c5ce7;
+        }
+        
+        .quiz-option.correct {
+            background: rgba(0, 184, 148, 0.15);
+            border-color: #00b894;
+        }
+        
+        .quiz-option.incorrect {
+            background: rgba(231, 76, 60, 0.15);
+            border-color: #e74c3c;
+        }
+        
+        .quiz-feedback {
+            display: none;
+            margin-top: 15px;
+        }
+        
+        .quiz-feedback.show {
+            display: block;
+        }
+        
+        .role-play-box {
+            background: linear-gradient(145deg, rgba(108, 92, 231, 0.15) 0%, rgba(108, 92, 231, 0.05) 100%);
+            border: 2px solid #6c5ce7;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .role-play-box h4 {
+            color: #6c5ce7;
+        }
+        
+        .step-flow {
+            margin: 20px 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .step-num {
+            background: linear-gradient(145deg, #6c5ce7, #5541d7);
+            color: #fff;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+            background: linear-gradient(145deg, #f8f9ff 0%, #f0f1f8 100%);
+            padding: 15px 20px;
+            border-radius: 8px;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #6c5ce7, #00b894);
+            border-radius: 3px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: linear-gradient(145deg, #f8f9ff 0%, #f0f1f8 100%);
+            border-radius: 8px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            background: #6c5ce7;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        
+        .timeline-time {
+            font-size: 0.85rem;
+            color: #6c5ce7;
+            font-weight: 600;
+        }
+        
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        /* Fixed Navigation */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            padding: 12px 28px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn.prev {
+            background: #e8e8f0;
+            color: #444;
+        }
+        
+        .nav-btn.prev:hover:not(:disabled) {
+            background: #d8d8e8;
+        }
+        
+        .nav-btn.next {
+            background: linear-gradient(145deg, #6c5ce7, #5541d7);
+            color: white;
+        }
+        
+        .nav-btn.next:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.4);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .progress-bar {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 500px;
+        }
+        
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(108, 92, 231, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-dot:hover {
+            background: rgba(108, 92, 231, 0.6);
+        }
+        
+        .progress-dot.active {
+            background: #6c5ce7;
+            transform: scale(1.3);
+        }
+        
+        .progress-dot.section-start {
+            width: 12px;
+            height: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content-grid,
+            .before-after,
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .navigation {
+                padding: 15px 20px;
+            }
+            
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+            
+            .workflow-diagram {
+                flex-direction: column;
+            }
+            
+            .workflow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+    <div class="slide active" id="slide-1">
+        <div class="slide-header">
+            <div class="slide-number">First Due ITM Training Program</div>
+            <h1>Module 4: Real-World Case Studies & Scenarios</h1>
+        </div>
+        <p style="font-size: 1.1rem; margin-bottom: 30px;">Apply your ITM knowledge to realistic sales situations, implementation scenarios, and objection handling through interactive case studies.</p>
+        <div class="content-grid">
+            <div class="content-card highlight">
+                <h3>🎯 What You'll Learn</h3>
+                <ul class="feature-list">
+                    <li>Handle common sales objections with confidence</li>
+                    <li>Tailor demos for different department types</li>
+                    <li>Navigate competitive displacement scenarios</li>
+                    <li>Address stakeholder-specific concerns</li>
+                    <li>Apply the integration story to real situations</li>
+                </ul>
+            </div>
+            <div class="content-card">
+                <h3>📚 Module Sections</h3>
+                <ul class="feature-list">
+                    <li>Section 1: Department Type Case Studies</li>
+                    <li>Section 2: Problem → Solution Stories</li>
+                    <li>Section 3: Objection Handling Scenarios</li>
+                    <li>Section 4: Stakeholder-Specific Demos</li>
+                    <li>Section 5: Competitive Scenarios</li>
+                    <li>Section 6: Role-Play Exercises</li>
+                </ul>
+            </div>
+        </div>
+        <div class="demo-tip">
+            <h4>💡 How to Use This Module</h4>
+            <p>Each case study includes background context, key challenges, recommended approaches, and talk tracks. Use these as templates for your actual sales conversations and demos.</p>
+        </div>
+        </div>
+
+    <!-- Slide 2: Case Study 1 - Small Rural Department -->
+    <div class="slide" id="slide-2">
+        <div class="slide-header">
+            <div class="slide-number">Section 1: Department Type Case Studies</div>
+            <h1>Case Study: Small Rural Department</h1>
+        </div>
+        <div class="case-study-header">
+            <div class="case-icon">🏡</div>
+            <div>
+                <h2>Pinewood Valley Fire District</h2>
+                <p style="margin: 0;">Population: 12,000 | Full-time Staff: 3 | Commercial Occupancies: ~150</p>
+                <div class="case-meta">
+                    <span class="meta-tag">Limited Staff</span>
+                    <span class="meta-tag">Budget-Conscious</span>
+                    <span class="meta-tag">Paper-Based Currently</span>
+                </div>
+            </div>
+        </div>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>📋 Current Situation</h3>
+                <ul class="feature-list">
+                    <li>Fire Chief doubles as Fire Marshal</li>
+                    <li>ITM reports arrive via fax, mail, or hand-delivery</li>
+                    <li>Reports stored in filing cabinets by address</li>
+                    <li>No systematic tracking of deficiencies</li>
+                    <li>Part-time admin handles data entry</li>
+                    <li>Firefighters have no visibility into systems</li>
+                </ul>
+            </div>
+            <div class="content-card warning">
+                <h3>⚠️ Their Pain Points</h3>
+                <ul class="feature-list">
+                    <li>"We don't have time to chase contractors"</li>
+                    <li>"Reports get buried and forgotten"</li>
+                    <li>"I can't prove compliance for insurance audits"</li>
+                    <li>"Our firefighters don't know which buildings have issues"</li>
+                    <li>"We can't afford another expensive system"</li>
+                </ul>
+            </div>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Opening Discovery Question</h4>
+            <p>"Chief, walk me through what happens when ABC Fire Protection finishes their annual sprinkler inspection at the hardware store on Main Street. How does that report get to you, and what do you do with it?"</p>
+        </div>
+        </div>
+
+    <!-- Slide 3: Small Rural - Solution -->
+    <div class="slide" id="slide-3">
+        <div class="slide-header">
+            <div class="slide-number">Section 1: Department Type Case Studies</div>
+            <h1>Pinewood Valley: The Solution</h1>
+        </div>
+        <div class="before-after">
+            <div class="content-card before">
+                <h3>❌ Before First Due</h3>
+                <ul class="feature-list">
+                    <li>Chief manually tracks deficiencies in spreadsheet</li>
+                    <li>No notification when reports arrive</li>
+                    <li>Can't find reports when ISO asks</li>
+                    <li>Firefighters surprised by system issues on scene</li>
+                    <li>Contractors call asking if report was received</li>
+                </ul>
+            </div>
+            <div class="content-card after">
+                <h3>✅ After First Due</h3>
+                <ul class="feature-list">
+                    <li>Automatic email/text when ITM submitted</li>
+                    <li>Critical deficiencies auto-schedule inspections</li>
+                    <li>All compliance data in one searchable system</li>
+                    <li>Pre-plans show system status for responders</li>
+                    <li>Contractors get instant confirmation</li>
+                </ul>
+            </div>
+        </div>
+        <div class="stat-grid">
+            <div class="stat-box">
+                <div class="stat-value">$0</div>
+                <div class="stat-label">Cost to Department</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">90%</div>
+                <div class="stat-label">Less Admin Time</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Report Submission</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Deficiency Tracking</div>
+            </div>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Key Value Message</h4>
+            <p>"Chief, the ITM module is free to the fire department—contractors pay a small fee per submission. You get automated workflows that work around the clock. When a critical deficiency comes in at 2 AM, the system creates a compliance inspection automatically. That's the staff you don't have, working while you sleep."</p>
+        </div>
+        </div>
+
+    <!-- Slide 4: Case Study 2 - Large Metro Department -->
+    <div class="slide" id="slide-4">
+        <div class="slide-header">
+            <div class="slide-number">Section 1: Department Type Case Studies</div>
+            <h1>Case Study: Large Metro Department</h1>
+        </div>
+        <div class="case-study-header">
+            <div class="case-icon">🏙️</div>
+            <div>
+                <h2>Metro City Fire Department</h2>
+                <p style="margin: 0;">Population: 450,000 | Prevention Staff: 25 | Commercial Occupancies: ~8,000</p>
+                <div class="case-meta">
+                    <span class="meta-tag">High Volume</span>
+                    <span class="meta-tag">Multiple Users</span>
+                    <span class="meta-tag">Complex Workflows</span>
+                </div>
+            </div>
+        </div>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>📋 Current Situation</h3>
+                <ul class="feature-list">
+                    <li>Dedicated Fire Marshal's Office with 5 inspectors</li>
+                    <li>Currently using standalone ITM platform (LIV)</li>
+                    <li>Separate systems for inspections, permits, ITM</li>
+                    <li>Data silos between Prevention and Operations</li>
+                    <li>High report volume—500+ ITM reports monthly</li>
+                    <li>Already using First Due for inspections</li>
+                </ul>
+            </div>
+            <div class="content-card warning">
+                <h3>⚠️ Their Pain Points</h3>
+                <ul class="feature-list">
+                    <li>"We're paying for multiple systems that don't talk"</li>
+                    <li>"Operations never sees our compliance data"</li>
+                    <li>"We have to manually cross-reference reports"</li>
+                    <li>"Training staff on different platforms is a nightmare"</li>
+                    <li>"Enforcement follow-up is inconsistent"</li>
+                </ul>
+            </div>
+        </div>
+        <div class="demo-tip">
+            <h4>💡 Key Insight</h4>
+            <p>This department already uses First Due for inspections. The ITM pitch focuses on <strong>consolidation and integration</strong>—not introducing something new, but bringing everything together.</p>
+        </div>
+        </div>
+
+    <!-- Slide 5: Large Metro - Solution -->
+    <div class="slide" id="slide-5">
+        <div class="slide-header">
+            <div class="slide-number">Section 1: Department Type Case Studies</div>
+            <h1>Metro City: The Integration Story</h1>
+        </div>
+        <div class="workflow-diagram">
+            <div class="workflow-step">
+                <div style="font-size: 1.5rem;">📥</div>
+                <div style="font-size: 0.85rem;">ITM Submitted</div>
+            </div>
+            <div class="workflow-arrow">→</div>
+            <div class="workflow-step">
+                <div style="font-size: 1.5rem;">🏢</div>
+                <div style="font-size: 0.85rem;">Links to Occupancy</div>
+            </div>
+            <div class="workflow-arrow">→</div>
+            <div class="workflow-step">
+                <div style="font-size: 1.5rem;">🚒</div>
+                <div style="font-size: 0.85rem;">Updates Pre-Plan</div>
+            </div>
+            <div class="workflow-arrow">→</div>
+            <div class="workflow-step">
+                <div style="font-size: 1.5rem;">📋</div>
+                <div style="font-size: 0.85rem;">Triggers Inspection</div>
+            </div>
+            <div class="workflow-arrow">→</div>
+            <div class="workflow-step">
+                <div style="font-size: 1.5rem;">⚡</div>
+                <div style="font-size: 0.85rem;">Enforcement</div>
+            </div>
+        </div>
+        <div class="content-card highlight" style="margin-bottom: 20px;">
+            <h3>🔗 The Data Connection They're Missing</h3>
+            <p>With LIV, when an impaired sprinkler system comes in, that data stays in LIV. Firefighters responding to that building have no idea. With First Due ITM, that impairment immediately appears in the pre-plan—operations knows about it on scene.</p>
+        </div>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>📊 Consolidation Benefits</h3>
+                <ul class="feature-list">
+                    <li>One login for inspectors</li>
+                    <li>Single occupancy record with all data</li>
+                    <li>Automated cross-module workflows</li>
+                    <li>Unified reporting and analytics</li>
+                    <li>Reduced training burden</li>
+                </ul>
+            </div>
+            <div class="content-card success">
+                <h3>🎯 Demo Focus Areas</h3>
+                <ul class="feature-list">
+                    <li>Show ITM data in occupancy record</li>
+                    <li>Demonstrate pre-plan system status display</li>
+                    <li>Auto-scheduled compliance inspections</li>
+                    <li>Bulk actions for high-volume processing</li>
+                    <li>Role-based permissions for team</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 6: Case Study 3 - Fire Protection District -->
+    <div class="slide" id="slide-6">
+        <div class="slide-header">
+            <div class="slide-number">Section 1: Department Type Case Studies</div>
+            <h1>Case Study: Fire Protection District</h1>
+        </div>
+        <div class="case-study-header">
+            <div class="case-icon">🗺️</div>
+            <div>
+                <h2>Tri-County Fire Protection District</h2>
+                <p style="margin: 0;">Covers: 3 cities + unincorporated areas | Population: 85,000 | Staff: 8</p>
+                <div class="case-meta">
+                    <span class="meta-tag">Multi-Jurisdiction</span>
+                    <span class="meta-tag">Variable Fee Structures</span>
+                    <span class="meta-tag">Geographic Complexity</span>
+                </div>
+            </div>
+        </div>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>📋 Current Situation</h3>
+                <ul class="feature-list">
+                    <li>Fire protection district serving multiple cities</li>
+                    <li>Different fee schedules per jurisdiction</li>
+                    <li>Contracts with cities for fire prevention services</li>
+                    <li>Must track and report separately per city</li>
+                    <li>Some cities want ITM revenue, others don't charge</li>
+                </ul>
+            </div>
+            <div class="content-card warning">
+                <h3>⚠️ Unique Challenges</h3>
+                <ul class="feature-list">
+                    <li>"Each city has different fee requirements"</li>
+                    <li>"We need separate reporting for each jurisdiction"</li>
+                    <li>"Contractors work across all our areas"</li>
+                    <li>"Can the system handle variable pricing?"</li>
+                    <li>"Our board needs per-city compliance reports"</li>
+                </ul>
+            </div>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Key Discovery Question</h4>
+            <p>"How do you currently handle the different requirements and fee structures across your service areas? Are contractors confused about which rules apply where?"</p>
+        </div>
+        </div>
+
+    <!-- Slide 7: Fire District - Solution -->
+    <div class="slide" id="slide-7">
+        <div class="slide-header">
+            <div class="slide-number">Section 1: Department Type Case Studies</div>
+            <h1>Tri-County: Geographic Fee Flexibility</h1>
+        </div>
+        <div class="content-card highlight" style="margin-bottom: 20px;">
+            <h3>🎯 First Due Solution: Geographic Fee Variations</h3>
+            <p>First Due supports different fee structures based on geographical location. Fire protection districts can configure different rates for each city or area they serve, ensuring accurate billing and reporting per jurisdiction.</p>
+        </div>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>⚙️ Configuration Options</h3>
+                <ul class="feature-list">
+                    <li>Set different ITM fees per geographic area</li>
+                    <li>Variable pricing by system type</li>
+                    <li>Per-system vs. per-submittal billing options</li>
+                    <li>Sales tax configuration (where required)</li>
+                    <li>Separate reporting by jurisdiction</li>
+                </ul>
+            </div>
+            <div class="content-card success">
+                <h3>📊 Reporting Capabilities</h3>
+                <ul class="feature-list">
+                    <li>Filter ITM reports by city/area</li>
+                    <li>Compliance statistics per jurisdiction</li>
+                    <li>Revenue tracking by geographic zone</li>
+                    <li>Board-ready reports with city breakdowns</li>
+                    <li>Contractor activity across all areas</li>
+                </ul>
+            </div>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Value Message</h4>
+            <p>"Your contractors only need one Business Portal account to submit to all your areas. The system automatically applies the correct fee structure based on the property address. You get unified management with jurisdiction-specific reporting for your board and city contracts."</p>
+        </div>
+        </div>
+
+    <!-- Slide 8: Case Study 4 - Paper to Digital -->
+    <div class="slide" id="slide-8">
+        <div class="slide-header">
+            <div class="slide-number">Section 2: Problem → Solution Stories</div>
+            <h1>Digital Transformation Story</h1>
+        </div>
+        <div class="case-study-header">
+            <div class="case-icon">📄→💻</div>
+            <div>
+                <h2>Lakeside Fire Department</h2>
+                <p style="margin: 0;">Going from paper-based to fully digital ITM management</p>
+            </div>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-time">Day 1: Discovery Call</div>
+                <p>"We have 15 years of paper ITM reports in our basement. Nobody knows what's compliant."</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">Week 2: Demo</div>
+                <p>Fire Marshal sees automated workflow: submit → review → enforce. "You mean I don't have to create the inspection manually?"</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">Month 1: Go-Live</div>
+                <p>Contractors notified of new digital submission requirement. Reference documents uploaded to Document Center.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">Month 3: Adoption</div>
+                <p>85% of contractors submitting digitally. Chief says: "Contractors love it more than we do."</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">Month 6: Results</div>
+                <p>Zero paper reports. 100% deficiency tracking. First ISO audit completed entirely from system.</p>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 9: Critical Deficiency Story -->
+    <div class="slide" id="slide-9">
+        <div class="slide-header">
+            <div class="slide-number">Section 2: Problem → Solution Stories</div>
+            <h1>The Impairment That Didn't Fall Through Cracks</h1>
+        </div>
+        <div class="scenario-box">
+            <div class="scenario-label scenario">📍 SCENARIO</div>
+            <p><strong>Friday 11:47 PM:</strong> ABC Fire Protection submits an ITM report for the Riverside Apartments complex. The fire sprinkler system has a <span style="color: #e74c3c; font-weight: bold;">critical deficiency</span>—the main control valve is impaired. Building has 200 residents.</p>
+        </div>
+        <div class="content-grid">
+            <div class="content-card before">
+                <h3>❌ Without First Due</h3>
+                <ul class="feature-list">
+                    <li>Report sits in email until Monday</li>
+                    <li>Fire Marshal sees it Tuesday after meetings</li>
+                    <li>Manual phone call to building owner</li>
+                    <li>No one creates follow-up inspection</li>
+                    <li>Firefighters responding have no idea</li>
+                    <li>72+ hours of unknown impairment</li>
+                </ul>
+            </div>
+            <div class="content-card after">
+                <h3>✅ With First Due</h3>
+                <ul class="feature-list">
+                    <li>Impairment notification triggers immediately</li>
+                    <li>Fire Marshal gets text at 11:48 PM</li>
+                    <li>System auto-creates compliance check</li>
+                    <li>Pre-plan updates—crews see "SYSTEM IMPAIRED"</li>
+                    <li>Property owner auto-notified with fire watch requirements</li>
+                    <li>Zero delay, zero manual intervention</li>
+                </ul>
+            </div>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Story to Tell in Demos</h4>
+            <p>"Imagine it's 11:47 on a Friday night. A contractor just finished testing the sprinkler system at a 200-unit apartment complex and found the main valve is impaired. With your current process, when would you find out? With First Due, you'd know in 60 seconds, your firefighters would see the impairment in their pre-plan, and the building owner would already have fire watch requirements."</p>
+        </div>
+        </div>
+
+    <!-- Slide 10: Objection Handling Intro -->
+    <div class="slide" id="slide-10">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Common Objections & Responses</h1>
+        </div>
+        <p>Master these objection responses to handle pushback confidently. Each objection is an opportunity to reinforce First Due's value.</p>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>🎯 The Eight Objection Patterns</h3>
+                <ul class="feature-list">
+                    <li>"We already use LIV/Brycer"</li>
+                    <li>"Everyone around us uses [competitor]"</li>
+                    <li>"Our contractors won't adopt digital"</li>
+                    <li>"Standalone is cheaper / No budget"</li>
+                    <li>"It seems complicated to set up"</li>
+                    <li>"We're too small / Low volume"</li>
+                    <li>"Fix existing issues first"</li>
+                    <li>"We're committed to Brycer" (Loyalists)</li>
+                </ul>
+            </div>
+            <div class="content-card highlight">
+                <h3>🧠 The Response Framework</h3>
+                <ul class="feature-list">
+                    <li><strong>Acknowledge:</strong> Validate their concern</li>
+                    <li><strong>Discover:</strong> Ask questions to understand</li>
+                    <li><strong>Reframe:</strong> Shift perspective</li>
+                    <li><strong>Differentiate:</strong> Highlight unique value</li>
+                    <li><strong>Decide:</strong> Advance or graceful exit</li>
+                </ul>
+            </div>
+        </div>
+        <div class="demo-tip">
+            <h4>💡 Pro Tip</h4>
+            <p>Never dismiss an objection or argue. The best salespeople treat objections as information about what the prospect values. Use them to better understand the customer's priorities.</p>
+        </div>
+        </div>
+
+    <!-- Slide 10B: Neighborhood Mentality -->
+    <div class="slide" id="slide-10b">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Objection: "Neighborhood Mentality"</h1>
+        </div>
+        <div class="scenario-box objection">
+            <div class="scenario-label objection">⚠️ OBJECTION</div>
+            <p style="font-size: 1.1rem;">"Everyone around us uses LIV. All the departments in our region are on it. I don't want to be the only one doing something different."</p>
+        </div>
+        <div class="content-card" style="margin: 20px 0;">
+            <h3>🔍 Recognition Phrases</h3>
+            <ul class="feature-list">
+                <li>"Everyone around us uses..."</li>
+                <li>"We're part of a regional group that all uses..."</li>
+                <li>"I don't want to be the only one..."</li>
+                <li>"The other Fire Marshals would think..."</li>
+                <li>"We all submit to the same service providers..."</li>
+            </ul>
+        </div>
+        <div class="content-card info">
+            <h3>🔎 Discovery Questions</h3>
+            <ul class="feature-list">
+                <li>"Are you part of a formal mutual aid agreement or more informal coordination?"</li>
+                <li>"How often do service providers work across multiple jurisdictions in your area?"</li>
+                <li>"Have neighboring Fire Marshals discussed challenges with the current system?"</li>
+                <li>"Are there other technology decisions you've made as a group?"</li>
+            </ul>
+        </div>
+        </div>
+
+    <!-- Slide 10C: Neighborhood Mentality Response -->
+    <div class="slide" id="slide-10c">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Neighborhood Mentality: Response Strategy</h1>
+        </div>
+        <div class="content-card highlight" style="margin-bottom: 20px;">
+            <h3>🎯 Positioning Strategy</h3>
+            <p>Reframe from <strong>"being the odd one out"</strong> to <strong>"regional leadership opportunity."</strong> Position First Due as enabling better regional coordination through integration, not creating isolation.</p>
+        </div>
+        <div class="scenario-box response">
+            <div class="scenario-label response">✅ RESPONSE FRAMEWORK</div>
+            <p><strong>Acknowledge:</strong> "I completely understand—regional consistency matters, especially when service providers work across multiple jurisdictions. That's actually one of the reasons departments are looking at consolidating onto First Due."</p>
+            <p style="margin-top: 15px;"><strong>Reframe:</strong> "What we're seeing is that when one department leads the transition, it often creates momentum for neighboring departments. You already have our Inspection module, so you'd be getting ITM integrated with data you're already managing."</p>
+            <p style="margin-top: 15px;"><strong>Offer:</strong> "Would it be helpful if I connected with the neighboring departments as well? We could explore a coordinated transition timeline that works for everyone."</p>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Key Talking Points</h4>
+            <p>Service providers appreciate fewer systems. Your existing First Due relationship means less disruption. Regional agreements can include preferential terms. You're already managing occupancy data that feeds ITM.</p>
+        </div>
+        </div>
+
+    <!-- Slide 11: Objection 1 - Already Use LIV -->
+    <div class="slide" id="slide-11">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Objection: "We Already Use LIV"</h1>
+        </div>
+        <div class="scenario-box objection">
+            <div class="scenario-label objection">⚠️ OBJECTION</div>
+            <p style="font-size: 1.1rem;">"We've been using LIV for three years. Our contractors are trained on it, it works fine. Why would we switch?"</p>
+        </div>
+        <div class="scenario-box response">
+            <div class="scenario-label response">✅ RESPONSE FRAMEWORK</div>
+            <div class="step-flow">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h4>Acknowledge</h4>
+                        <p>"LIV does a good job of collecting ITM reports. You're right that contractors are familiar with submission portals."</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h4>Reframe</h4>
+                        <p>"The question isn't whether LIV can collect reports—it's what happens after they're collected. Where does that data go?"</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h4>Differentiate</h4>
+                        <p>"LIV collects reports but can't connect them to occupancy records, trigger inspections, update pre-plans, or automate enforcement. First Due does all of that because ITM is integrated into your complete fire prevention ecosystem."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Bridge Back</h4>
+            <p>"You mentioned your firefighters don't always know system status when they arrive. With LIV, that ITM data stays siloed. With First Due, an impairment shows up in the pre-plan automatically. That's the difference between data collection and operational awareness."</p>
+        </div>
+        </div>
+
+    <!-- Slide 11B: Brycer Loyalists -->
+    <div class="slide" id="slide-11b">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Objection: Brycer Loyalists</h1>
+        </div>
+        <div class="scenario-box objection">
+            <div class="scenario-label objection">⚠️ OBJECTION</div>
+            <p style="font-size: 1.1rem;">"We're committed to BRYCER. Are you just trying to replace them? BRYCER does everything we need."</p>
+        </div>
+        <div class="content-card" style="margin: 20px 0;">
+            <h3>🔍 Recognition Phrases</h3>
+            <ul class="feature-list">
+                <li>"We love BRYCER..." (defensive tone)</li>
+                <li>"BRYCER does everything we need..."</li>
+                <li>"Why would we switch from BRYCER?"</li>
+                <li>"Are you trying to compete with BRYCER?"</li>
+                <li>"This feels like you're going after BRYCER..."</li>
+            </ul>
+        </div>
+        <div class="content-card warning">
+            <h3>⚠️ Critical Don'ts</h3>
+            <ul class="feature-list">
+                <li>Never criticize BRYCER directly</li>
+                <li>Never get drawn into feature comparisons</li>
+                <li>Never imply they made a wrong decision</li>
+                <li>Never press after they've clearly stated commitment</li>
+            </ul>
+        </div>
+        </div>
+
+    <!-- Slide 11C: Brycer Loyalists Response -->
+    <div class="slide" id="slide-11c">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Brycer Loyalists: Response Strategy</h1>
+        </div>
+        <div class="content-card highlight" style="margin-bottom: 20px;">
+            <h3>🎯 Positioning Strategy</h3>
+            <p>Acknowledge BRYCER's strengths explicitly. Position First Due ITM as <strong>consolidation and integration</strong>, not competition. Focus on single-platform efficiency and cross-module visibility rather than feature comparison.</p>
+        </div>
+        <div class="scenario-box response">
+            <div class="scenario-label response">✅ DE-ESCALATION RESPONSE</div>
+            <p><strong>Immediate:</strong> "I want to be really clear—this isn't about replacing BRYCER or suggesting there's anything wrong with it. BRYCER is a strong ITM platform, and I respect the relationship you've built with them."</p>
+            <p style="margin-top: 15px;"><strong>Consultative Pivot:</strong> "What I'm hearing from Fire Marshals is that managing multiple platforms—even when each works well—creates inefficiencies. You're already managing inspections and occupancies in First Due. The question is whether consolidating ITM into that same platform would make your operation more efficient."</p>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Finding Middle Ground</h4>
+            <p>"Can I ask—what would it take for consolidation to make sense? Is it primarily about features, contract timing, service provider relationships, or something else?"</p>
+        </div>
+        </div>
+
+    <!-- Slide 12: Objection 2 - Contractors Won't Adopt -->
+    <div class="slide" id="slide-12">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Objection: "Our Contractors Won't Adopt Digital"</h1>
+        </div>
+        <div class="scenario-box objection">
+            <div class="scenario-label objection">⚠️ OBJECTION</div>
+            <p style="font-size: 1.1rem;">"Our contractors are old-school. They've been faxing reports for 20 years. They're not going to switch to some portal."</p>
+        </div>
+        <div class="scenario-box response">
+            <div class="scenario-label response">✅ RESPONSE</div>
+            <p>"Actually, contractors prefer digital submission—and here's why they're often MORE enthusiastic than fire departments:"</p>
+            <ul class="feature-list" style="margin-top: 15px;">
+                <li><strong>Confirmation:</strong> No more "did you get my report?" calls</li>
+                <li><strong>Convenience:</strong> Submit from the field immediately after service</li>
+                <li><strong>One Portal:</strong> Manage all their AHJs from one account</li>
+                <li><strong>Status Updates:</strong> Know instantly when reports are approved</li>
+                <li><strong>Familiarity:</strong> Many already use LIV, Brycer, or similar—the interface is similar</li>
+            </ul>
+        </div>
+        <div class="quote-box">
+            <p>"In our experience, contractor adoption isn't the challenge—it's usually 85%+ within the first 90 days. The ones who were faxing? They're often the happiest because they finally get confirmation their reports were received."</p>
+        </div>
+        </div>
+
+    <!-- Slide 13: Objection 3 - Standalone is Cheaper -->
+    <div class="slide" id="slide-13">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Objection: "Standalone is Cheaper"</h1>
+        </div>
+        <div class="scenario-box objection">
+            <div class="scenario-label objection">⚠️ OBJECTION</div>
+            <p style="font-size: 1.1rem;">"We've looked at this. LIV is free to the department. Why would I pay for something else?"</p>
+        </div>
+        <div class="scenario-box response">
+            <div class="scenario-label response">✅ RESPONSE</div>
+            <p><strong>First Due ITM is also free to the department.</strong> The fee structure is the same across the industry—service providers pay per submission, not fire departments.</p>
+        </div>
+        <div class="content-card highlight" style="margin-top: 20px;">
+            <h3>💰 The Real Cost Comparison</h3>
+            <p>The hidden cost isn't the software—it's the <strong>time and inefficiency</strong> of managing separate systems:</p>
+            <ul class="feature-list">
+                <li>Staff time logging into multiple platforms</li>
+                <li>Manual data entry to copy info between systems</li>
+                <li>Missed deficiencies due to siloed data</li>
+                <li>Training costs for multiple interfaces</li>
+                <li>No automated workflows = more manual work</li>
+            </ul>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Reframe the Question</h4>
+            <p>"The real question isn't the cost of the software—it's the cost of maintaining separate systems that don't communicate. What's the cost when a critical deficiency falls through the cracks because it's in one system and your inspections are in another?"</p>
+        </div>
+        </div>
+
+    <!-- Slide 14: Objection 4 - Setup Complicated -->
+    <div class="slide" id="slide-14">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Objection: "It Seems Complicated to Set Up"</h1>
+        </div>
+        <div class="scenario-box objection">
+            <div class="scenario-label objection">⚠️ OBJECTION</div>
+            <p style="font-size: 1.1rem;">"This looks like a lot of configuration. We don't have time to set up another system."</p>
+        </div>
+        <div class="scenario-box response">
+            <div class="scenario-label response">✅ RESPONSE</div>
+            <p>"I understand that concern. Let me walk you through what setup actually involves:"</p>
+        </div>
+        <div class="step-flow" style="margin-top: 20px;">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h4>AHJ Configuration (One-Time)</h4>
+                    <p>Set your notification preferences—who gets emailed/texted for each status type. Configure once, system handles the rest.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h4>Document Center</h4>
+                    <p>Upload reference documents for contractors (fee schedules, ITM requirements). Optional but helpful.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h4>Contractor Communication</h4>
+                    <p>Send notification to your contractor community about digital submission. We provide templates.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <h4>Contractor Self-Registration</h4>
+                    <p>Contractors create their own accounts and register with your AHJ. You don't set them up.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 15: Objection 5 - No Budget -->
+    <div class="slide" id="slide-15">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Objection: "We Don't Have Budget"</h1>
+        </div>
+        <div class="scenario-box objection">
+            <div class="scenario-label objection">⚠️ OBJECTION</div>
+            <p style="font-size: 1.1rem;">"Look, our budget is tight. We can't add another line item right now."</p>
+        </div>
+        <div class="scenario-box response">
+            <div class="scenario-label response">✅ RESPONSE</div>
+            <p><strong>The ITM module has no cost to the fire department.</strong></p>
+            <p style="margin-top: 10px;">Service providers pay a small fee (~$20) per submission. First Due collects this through the Business Portal. You get the functionality, they pay the freight.</p>
+        </div>
+        <div class="content-grid" style="margin-top: 20px;">
+            <div class="content-card success">
+                <h3>💰 Fee Structure</h3>
+                <ul class="feature-list">
+                    <li>AHJ cost: $0</li>
+                    <li>Service provider: ~$20/submittal</li>
+                    <li>Credits purchased in bulk via Stripe</li>
+                    <li>Rejected submissions = credits refunded</li>
+                    <li>Variable pricing available by volume</li>
+                </ul>
+            </div>
+            <div class="content-card info">
+                <h3>📊 Optional Revenue</h3>
+                <ul class="feature-list">
+                    <li>Some AHJs add their own fee on top</li>
+                    <li>Geographic fee variations supported</li>
+                    <li>Per-system billing available</li>
+                    <li>Can generate revenue if desired</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 15B: Low Report Volume -->
+    <div class="slide" id="slide-15b">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Objection: "We're Too Small / Low Volume"</h1>
+        </div>
+        <div class="scenario-box objection">
+            <div class="scenario-label objection">⚠️ OBJECTION</div>
+            <p style="font-size: 1.1rem;">"We only get a few reports per month. Our Fire Marshal handles it fine without a system. We're too small for this."</p>
+        </div>
+        <div class="content-card" style="margin: 20px 0;">
+            <h3>🔍 Recognition Phrases</h3>
+            <ul class="feature-list">
+                <li>"We only get a few reports per month..."</li>
+                <li>"Service providers submit directly to us anyway..."</li>
+                <li>"We just manually upload the reports..."</li>
+                <li>"The fees would cost more than the problem..."</li>
+                <li>"Our Fire Marshal handles it fine..."</li>
+            </ul>
+        </div>
+        <div class="content-card info">
+            <h3>🔎 Discovery Questions</h3>
+            <ul class="feature-list">
+                <li>"Walk me through what happens when a service provider submits an ITM report today."</li>
+                <li>"How do you track when inspections are coming due?"</li>
+                <li>"How do you generate compliance reports for leadership/state/insurance?"</li>
+                <li>"How much time does your Fire Marshal spend managing ITM manually each week?"</li>
+            </ul>
+        </div>
+        </div>
+
+    <!-- Slide 15C: Low Volume Qualification -->
+    <div class="slide" id="slide-15c">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Low Volume: Qualification Framework</h1>
+        </div>
+        <div class="content-grid">
+            <div class="content-card warning">
+                <h3>🔴 TRUE Low Volume (May Not Fit)</h3>
+                <ul class="feature-list">
+                    <li>&lt;50 properties requiring ITM</li>
+                    <li>&lt;10 reports per month</li>
+                    <li>Single Fire Marshal operation</li>
+                    <li>No compliance reporting requirements</li>
+                    <li>Manual process is genuinely efficient</li>
+                    <li>No growth anticipated</li>
+                </ul>
+            </div>
+            <div class="content-card success">
+                <h3>🟢 PERCEPTION Issue (Good Candidate)</h3>
+                <ul class="feature-list">
+                    <li>Underestimating admin time on manual process</li>
+                    <li>Not considering proactive due date tracking</li>
+                    <li>Missing value of audit trail/historical reporting</li>
+                    <li>Not accounting for follow-up time</li>
+                    <li>Fire Marshal approaching retirement</li>
+                    <li>Growth anticipated in 2-3 years</li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-card highlight" style="margin-top: 20px;">
+            <h3>🎯 Positioning Strategy</h3>
+            <p>Shift conversation from <strong>"report volume"</strong> to <strong>"compliance visibility and operational efficiency."</strong> Position ITM as a compliance management system, not just a report repository. Focus on time savings and risk reduction.</p>
+        </div>
+        </div>
+
+    <!-- Slide 15D: Low Volume Response -->
+    <div class="slide" id="slide-15d">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Low Volume: Response Strategy</h1>
+        </div>
+        <div class="scenario-box response">
+            <div class="scenario-label response">✅ VALUE BEYOND REPORT PROCESSING</div>
+            <p>"I hear you on the volume—and you're right that if ITM were just about receiving reports, the manual process might work fine. But let me ask: How much time does your Fire Marshal spend chasing overdue inspections, pulling historical data, or generating compliance reports?"</p>
+            <p style="margin-top: 15px;"><strong>The value for smaller departments is in three areas:</strong></p>
+            <ol style="margin-top: 10px; margin-left: 20px; color: #dfe6e9;">
+                <li><strong>Proactive compliance tracking:</strong> System alerts you when inspections are coming due</li>
+                <li><strong>Instant historical visibility:</strong> One click instead of digging through files</li>
+                <li><strong>Automated follow-up:</strong> System does the chasing, freeing Fire Marshal time</li>
+            </ol>
+        </div>
+        <div class="demo-tip">
+            <h4>💰 ROI Calculation Framework</h4>
+            <p>"Let's do quick math. If your Fire Marshal spends even 5 hours/month on ITM tasks—chasing providers, pulling reports, tracking compliance—that's 60 hours/year. At typical hourly rates, that's significant cost. If we save even half that time, you're breaking even. Everything beyond is time spent on actual fire prevention."</p>
+        </div>
+        </div>
+
+    <!-- Slide 15E: Frustrated Existing Customer -->
+    <div class="slide" id="slide-15e">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Objection: Frustrated Existing Customer</h1>
+        </div>
+        <div class="scenario-box objection">
+            <div class="scenario-label objection">⚠️ OBJECTION</div>
+            <p style="font-size: 1.1rem;">"Before we talk about ITM, I need to tell you about problems we're having. Why are you adding more products when you can't fix our existing issues?"</p>
+        </div>
+        <div class="content-card" style="margin: 20px 0;">
+            <h3>🔍 Recognition Phrases</h3>
+            <ul class="feature-list">
+                <li>"Before we talk about ITM, I need to tell you about..."</li>
+                <li>"Why are you adding more products when [existing issue]?"</li>
+                <li>"You're getting greedy with all these add-ons..."</li>
+                <li>"Fix [existing problem] before trying to sell me more..."</li>
+                <li>Angry or frustrated tone from call start</li>
+            </ul>
+        </div>
+        <div class="content-card highlight">
+            <h3>🎯 Positioning Strategy</h3>
+            <p><strong>Listen first, validate concerns, separate frustration from ITM evaluation.</strong> Position ITM as potentially SOLVING integration problems rather than adding complexity. Never continue pitching after they've expressed frustration.</p>
+        </div>
+        </div>
+
+    <!-- Slide 15F: Frustrated Customer Triage -->
+    <div class="slide" id="slide-15f">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Frustrated Customer: Triage Protocol</h1>
+        </div>
+        <div class="content-grid">
+            <div class="content-card warning">
+                <h3>🔴 CRITICAL (Immediate Escalation)</h3>
+                <ul class="feature-list">
+                    <li>System downtime or access problems</li>
+                    <li>Data integrity concerns</li>
+                    <li>Safety-related functionality issues</li>
+                    <li>Contractual disputes</li>
+                    <li>Threats to cancel/churn</li>
+                </ul>
+                <p style="margin-top: 10px; font-size: 0.9rem;"><strong>Action:</strong> "This needs immediate attention. Let me connect you with [CSM/Support] right now."</p>
+            </div>
+            <div class="content-card info">
+                <h3>🟡 ONGOING (CSM Coordination)</h3>
+                <ul class="feature-list">
+                    <li>Feature requests not addressed</li>
+                    <li>Training gaps</li>
+                    <li>Workflow inefficiencies</li>
+                    <li>Response time concerns</li>
+                    <li>Communication breakdowns</li>
+                </ul>
+                <p style="margin-top: 10px; font-size: 0.9rem;"><strong>Action:</strong> Document and ensure CSM follows up by specific timeframe.</p>
+            </div>
+        </div>
+        <div class="scenario-box response" style="margin-top: 20px;">
+            <div class="scenario-label response">✅ RESPONSE FOR "TOO MANY PRODUCTS"</div>
+            <p>"I appreciate you being direct. We're not adding ITM as an upsell tactic. We built it because customers asked for it—they told us managing multiple platforms for inspections, pre-plans, and ITM compliance was inefficient. The goal is to <em>reduce</em> the number of systems you're juggling, not add to them."</p>
+        </div>
+        </div>
+
+    <!-- Slide 15G: Advance vs Exit Decision -->
+    <div class="slide" id="slide-15g">
+        <div class="slide-header">
+            <div class="slide-number">Section 3: Objection Handling Scenarios</div>
+            <h1>Decision Framework: Advance or Exit?</h1>
+        </div>
+        <div class="content-grid">
+            <div class="content-card success">
+                <h3>✅ ADVANCE IF...</h3>
+                <ul class="feature-list">
+                    <li>They acknowledge integration challenges</li>
+                    <li>Contract renewal is approaching</li>
+                    <li>Frustration with managing multiple platforms</li>
+                    <li>They ask detailed functionality questions</li>
+                    <li>Service providers have requested fewer platforms</li>
+                    <li>They request demo or follow-up meeting</li>
+                    <li>They introduce other stakeholders</li>
+                    <li>They discuss pricing/implementation timing</li>
+                </ul>
+            </div>
+            <div class="content-card warning">
+                <h3>🚪 GRACEFUL EXIT IF...</h3>
+                <ul class="feature-list">
+                    <li>Recent competitor contract renewal with satisfaction</li>
+                    <li>Strong personal relationship with competitor rep</li>
+                    <li>No integration pain points identified</li>
+                    <li>Political sensitivity about vendor relationships</li>
+                    <li>They've explicitly said no multiple times</li>
+                    <li>Genuinely low volume with no growth expected</li>
+                    <li>Budget/contract timing makes it impossible</li>
+                    <li>Relationship is at risk</li>
+                </ul>
+            </div>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Graceful Exit Script</h4>
+            <p>"I appreciate you being direct. If your situation changes—whether that's contract timing, growth, or new requirements—let's reconnect. In the meantime, I'll make sure you're getting maximum value from your current First Due modules."</p>
+        </div>
+        </div>
+
+    <!-- Slide 16: Stakeholder Demos Intro -->
+    <div class="slide" id="slide-16">
+        <div class="slide-header">
+            <div class="slide-number">Section 4: Stakeholder-Specific Demos</div>
+            <h1>Tailoring Your Demo by Audience</h1>
+        </div>
+        <p>Different stakeholders care about different things. Customize your demo emphasis based on who's in the room.</p>
+        <div class="content-grid">
+            <div class="persona-card">
+                <div class="persona-icon">🏛️</div>
+                <div class="persona-content">
+                    <h3>Fire Marshal / Prevention Chief</h3>
+                    <p style="color: #74b9ff; margin-bottom: 10px;">Primary Decision Maker</p>
+                    <p>Cares about: Workflow efficiency, deficiency tracking, compliance documentation, enforcement automation</p>
+                </div>
+            </div>
+            <div class="persona-card">
+                <div class="persona-icon">👨‍🚒</div>
+                <div class="persona-content">
+                    <h3>Fire Chief / Operations</h3>
+                    <p style="color: #74b9ff; margin-bottom: 10px;">Budget & Strategic Oversight</p>
+                    <p>Cares about: Operations awareness, firefighter safety, ISO rating, cost/ROI, integration with existing systems</p>
+                </div>
+            </div>
+            <div class="persona-card">
+                <div class="persona-icon">💻</div>
+                <div class="persona-content">
+                    <h3>IT Director</h3>
+                    <p style="color: #74b9ff; margin-bottom: 10px;">Technical Evaluator</p>
+                    <p>Cares about: Security, integrations, data ownership, support model, system requirements</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 17: Fire Marshal Demo -->
+    <div class="slide" id="slide-17">
+        <div class="slide-header">
+            <div class="slide-number">Section 4: Stakeholder-Specific Demos</div>
+            <h1>Demo Focus: Fire Marshal</h1>
+        </div>
+        <div class="persona-card" style="margin-bottom: 25px;">
+            <div class="persona-icon">🏛️</div>
+            <div class="persona-content">
+                <h3>What They Need to See</h3>
+                <p>Fire Marshals live in the weeds of compliance. Show them the day-to-day workflow improvements.</p>
+            </div>
+        </div>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>🎯 Demo Priority Features</h3>
+                <ul class="feature-list">
+                    <li>ITM Reports dashboard with filtering</li>
+                    <li>Review/approve/reject workflow</li>
+                    <li>Status change notifications (critical/impaired)</li>
+                    <li>Auto-scheduled compliance inspections</li>
+                    <li>Bulk actions for high-volume processing</li>
+                    <li>Rejection reason codes and comments</li>
+                </ul>
+            </div>
+            <div class="content-card highlight">
+                <h3>💬 Questions to Ask</h3>
+                <ul class="feature-list">
+                    <li>"How long does it take to review a report today?"</li>
+                    <li>"What happens when you find a critical deficiency?"</li>
+                    <li>"How do you track what's been resolved?"</li>
+                    <li>"Who follows up on impairments?"</li>
+                </ul>
+            </div>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Opening for Fire Marshal</h4>
+            <p>"Walk me through what happens when a sprinkler contractor drops off an ITM report. From the moment it hits your desk, what's your process? How many touches does it take before you're confident it's resolved?"</p>
+        </div>
+        </div>
+
+    <!-- Slide 18: Fire Chief Demo -->
+    <div class="slide" id="slide-18">
+        <div class="slide-header">
+            <div class="slide-number">Section 4: Stakeholder-Specific Demos</div>
+            <h1>Demo Focus: Fire Chief</h1>
+        </div>
+        <div class="persona-card" style="margin-bottom: 25px;">
+            <div class="persona-icon">👨‍🚒</div>
+            <div class="persona-content">
+                <h3>What They Need to See</h3>
+                <p>Chiefs care about the big picture: safety, efficiency, and cost. Skip the weeds, show strategic value.</p>
+            </div>
+        </div>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>🎯 Demo Priority Features</h3>
+                <ul class="feature-list">
+                    <li>Pre-plan integration (impairments visible to crews)</li>
+                    <li>Automated workflows (24/7 processing)</li>
+                    <li>Zero cost to department</li>
+                    <li>Platform consolidation story</li>
+                    <li>Compliance reporting for ISO/insurance</li>
+                </ul>
+            </div>
+            <div class="content-card highlight">
+                <h3>💬 Questions to Ask</h3>
+                <ul class="feature-list">
+                    <li>"How do your crews know if a building has system issues before they arrive?"</li>
+                    <li>"What's your current ISO rating? Looking to improve?"</li>
+                    <li>"How many systems are you using for prevention work?"</li>
+                </ul>
+            </div>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Value Story for Chiefs</h4>
+            <p>"Chief, imagine it's 2 AM and a sprinkler contractor submits a report showing an impaired system at the Riverside Apartments. With First Due, your on-shift crew would see that impairment in their pre-plan before they ever roll on a call there. That's the kind of operational awareness that saves lives—and it happens automatically."</p>
+        </div>
+        </div>
+
+    <!-- Slide 19: IT Director Demo -->
+    <div class="slide" id="slide-19">
+        <div class="slide-header">
+            <div class="slide-number">Section 4: Stakeholder-Specific Demos</div>
+            <h1>Demo Focus: IT Director</h1>
+        </div>
+        <div class="persona-card" style="margin-bottom: 25px;">
+            <div class="persona-icon">💻</div>
+            <div class="persona-content">
+                <h3>What They Need to See</h3>
+                <p>IT evaluates technical fit, security, and integration capabilities. Be ready for technical questions.</p>
+            </div>
+        </div>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>🎯 Demo Priority Features</h3>
+                <ul class="feature-list">
+                    <li>Role-based permissions system</li>
+                    <li>API integration capabilities</li>
+                    <li>Stripe payment integration</li>
+                    <li>Data architecture (how ITM connects to occupancies)</li>
+                    <li>Cloud hosting/security model</li>
+                </ul>
+            </div>
+            <div class="content-card highlight">
+                <h3>💬 Be Ready For</h3>
+                <ul class="feature-list">
+                    <li>"What APIs are available?"</li>
+                    <li>"How is data backed up?"</li>
+                    <li>"What's your uptime SLA?"</li>
+                    <li>"Can we export our data?"</li>
+                    <li>"How does authentication work?"</li>
+                </ul>
+            </div>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Technical Integration Message</h4>
+            <p>"ITM data lives in the same database as your occupancy records and pre-plans. When a report comes in, it automatically associates with the existing place record—there's no separate data silo. The Business Portal handles contractor authentication separately, and payments go through Stripe so we're not handling financial data directly."</p>
+        </div>
+        </div>
+
+    <!-- Slide 20: Competitive Scenario - LIV Displacement -->
+    <div class="slide" id="slide-20">
+        <div class="slide-header">
+            <div class="slide-number">Section 5: Competitive Scenarios</div>
+            <h1>Scenario: Displacing LIV/Brycer</h1>
+        </div>
+        <div class="scenario-box">
+            <div class="scenario-label scenario">📍 SITUATION</div>
+            <p>Prospect has been using LIV for 3 years. Contractors are trained, data is in the system. They're evaluating First Due for inspections and wondering about ITM.</p>
+        </div>
+        <div class="content-card warning" style="margin: 20px 0;">
+            <h3>⚠️ What NOT to Do</h3>
+            <ul class="feature-list">
+                <li>Don't bash LIV—it works for what it does</li>
+                <li>Don't force immediate ITM decision</li>
+                <li>Don't oversell migration complexity</li>
+            </ul>
+        </div>
+        <div class="content-card success">
+            <h3>✅ Recommended Approach</h3>
+            <ul class="feature-list">
+                <li><strong>Lead with Integration:</strong> "LIV works, but does it talk to your occupancies? Your pre-plans? Your inspections?"</li>
+                <li><strong>Paint the Future:</strong> "Once you're on First Due for inspections, adding ITM is a natural extension—same login, same data."</li>
+                <li><strong>Don't Force:</strong> "Start with inspections. See the value. ITM can come when you're ready."</li>
+                <li><strong>Contractor Story:</strong> "Your contractors already know portal submission. They'll adapt quickly."</li>
+            </ul>
+        </div>
+        </div>
+
+    <!-- Slide 21: Contractor Software Question -->
+    <div class="slide" id="slide-21">
+        <div class="slide-header">
+            <div class="slide-number">Section 5: Competitive Scenarios</div>
+            <h1>Scenario: "Contractors Use Inspect Point"</h1>
+        </div>
+        <div class="scenario-box">
+            <div class="scenario-label scenario">📍 SITUATION</div>
+            <p>During demo, Fire Marshal says: "Most of our contractors use Inspect Point or ServiceTrade for their inspections. They generate PDF reports from those systems. How does that work with First Due?"</p>
+        </div>
+        <div class="content-card highlight" style="margin: 20px 0;">
+            <h3>🔑 Key Clarification</h3>
+            <p><strong>Inspect Point, ServiceTrade, BuildingReports, FormLink, Uptick</strong> = Inspection software that SERVICE PROVIDERS use to conduct and document their inspections.</p>
+            <p style="margin-top: 10px;"><strong>First Due, LIV, Brycer</strong> = Submission platforms where service providers SEND those reports to fire departments.</p>
+            <p style="margin-top: 10px;">These are complementary, not competitive!</p>
+        </div>
+        <div class="talk-track">
+            <h4>💬 Response</h4>
+            <p>"Great question—Inspect Point and ServiceTrade are tools contractors use to DO the inspection and generate the report. First Due is where they SUBMIT that report to you. Today, those contractors export a PDF from Inspect Point and either fax it, email it, or upload it to a portal like LIV. With First Due, they'd upload that same PDF through our Business Portal. The report generation doesn't change—just where it goes after."</p>
+        </div>
+        <div class="demo-tip">
+            <h4>💡 Future API Integration</h4>
+            <p>First Due is developing API integrations with service provider software like Inspect Point and ServiceTrade. In the future, contractors may be able to submit directly from their inspection software without manual PDF upload. This is a roadmap item worth mentioning.</p>
+        </div>
+        </div>
+
+    <!-- Slide 22: Role Play Intro -->
+    <div class="slide" id="slide-22">
+        <div class="slide-header">
+            <div class="slide-number">Section 6: Role-Play Exercises</div>
+            <h1>Practice Makes Perfect</h1>
+        </div>
+        <p>Use these role-play scenarios to practice with colleagues. One person plays the prospect, one plays the First Due rep.</p>
+        <div class="content-grid">
+            <div class="role-play-box">
+                <h4>🎭 Role-Play #1: The Skeptical Fire Marshal</h4>
+                <p><strong>Setup:</strong> Fire Marshal has been burned by software promises before. "Every vendor says they're different."</p>
+                <p><strong>Challenge:</strong> Get them to describe their current pain points without being pushy. Then show specific value.</p>
+                <p><strong>Win Condition:</strong> They agree to see a demo focused on their specific workflow.</p>
+            </div>
+            <div class="role-play-box">
+                <h4>🎭 Role-Play #2: The Budget-Focused Chief</h4>
+                <p><strong>Setup:</strong> Chief controls budget but doesn't understand ITM details. "What's this going to cost me?"</p>
+                <p><strong>Challenge:</strong> Explain the fee structure clearly. Connect to strategic value, not features.</p>
+                <p><strong>Win Condition:</strong> They understand it's free to department and see operations value.</p>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 23: Role Play Scenarios Continued -->
+    <div class="slide" id="slide-23">
+        <div class="slide-header">
+            <div class="slide-number">Section 6: Role-Play Exercises</div>
+            <h1>More Role-Play Scenarios</h1>
+        </div>
+        <div class="content-grid">
+            <div class="role-play-box">
+                <h4>🎭 Role-Play #3: The IT Gatekeeper</h4>
+                <p><strong>Setup:</strong> IT Director is skeptical of "another cloud system." Asks about security, data ownership, APIs.</p>
+                <p><strong>Challenge:</strong> Answer technical questions confidently. Know when to say "I'll get back to you."</p>
+                <p><strong>Win Condition:</strong> They're comfortable with the technical approach and don't block the project.</p>
+            </div>
+            <div class="role-play-box">
+                <h4>🎭 Role-Play #4: The LIV Loyalist</h4>
+                <p><strong>Setup:</strong> They love LIV. "It works fine. Contractors know it. Why change?"</p>
+                <p><strong>Challenge:</strong> Don't attack LIV. Find what LIV CAN'T do and show that gap.</p>
+                <p><strong>Win Condition:</strong> They acknowledge the integration gap even if not ready to switch.</p>
+            </div>
+            <div class="role-play-box">
+                <h4>🎭 Role-Play #5: The Impairment Emergency</h4>
+                <p><strong>Setup:</strong> Mid-demo, you get to ITM. They say "Show me what happens when an impairment comes in."</p>
+                <p><strong>Challenge:</strong> Walk through the complete workflow: notification → pre-plan update → compliance check scheduling.</p>
+                <p><strong>Win Condition:</strong> "That would have helped us last month when..."</p>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 24: Knowledge Check 1 -->
+    <div class="slide" id="slide-24">
+        <div class="slide-header">
+            <div class="slide-number">Section 6: Knowledge Checks</div>
+            <h1>Knowledge Check #1</h1>
+        </div>
+        <div class="knowledge-check">
+            <h3>🧠 Scenario Question</h3>
+            <p><strong>A Fire Chief says:</strong> "We're a small department with limited staff. We don't have time to manage another system."</p>
+            <p style="margin-top: 15px;"><strong>What's your best response?</strong></p>
+            <label class="quiz-option" onclick="revealAnswer('kc1')">
+                <input type="radio" name="kc1" style="margin-right: 10px;">
+                A) "First Due is easy to set up—it only takes about 30 minutes."
+            </label>
+            <label class="quiz-option" onclick="revealAnswer('kc1')">
+                <input type="radio" name="kc1" style="margin-right: 10px;">
+                B) "That's exactly why automation matters. When a critical deficiency comes in at 2 AM, the system creates the compliance inspection and notifies your team—no manual work required. It's like having staff working 24/7."
+            </label>
+            <label class="quiz-option" onclick="revealAnswer('kc1')">
+                <input type="radio" name="kc1" style="margin-right: 10px;">
+                C) "You should really make time for this—compliance is important."
+            </label>
+            <label class="quiz-option" onclick="revealAnswer('kc1')">
+                <input type="radio" name="kc1" style="margin-right: 10px;">
+                D) "Most of our customers feel the same way at first."
+            </label>
+            <div id="answer-kc1" class="demo-tip" style="margin-top: 20px; display: none;">
+                <h4>✅ Answer: B</h4>
+                <p>Acknowledge their constraint, then show how First Due SOLVES it through automation. Don't minimize their concern or lecture them about compliance importance.</p>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 25: Knowledge Check 2 -->
+    <div class="slide" id="slide-25">
+        <div class="slide-header">
+            <div class="slide-number">Section 6: Knowledge Checks</div>
+            <h1>Knowledge Check #2</h1>
+        </div>
+        <div class="knowledge-check">
+            <h3>🧠 Scenario Question</h3>
+            <p><strong>A prospect asks:</strong> "Our contractors use Inspect Point. Does that integrate with First Due?"</p>
+            <p style="margin-top: 15px;"><strong>What's the correct response?</strong></p>
+            <label class="quiz-option" onclick="revealAnswer('kc2')">
+                <input type="radio" name="kc2" style="margin-right: 10px;">
+                A) "No, they're competitors. Contractors would need to stop using Inspect Point."
+            </label>
+            <label class="quiz-option" onclick="revealAnswer('kc2')">
+                <input type="radio" name="kc2" style="margin-right: 10px;">
+                B) "Yes, there's a full API integration today."
+            </label>
+            <label class="quiz-option" onclick="revealAnswer('kc2')">
+                <input type="radio" name="kc2" style="margin-right: 10px;">
+                C) "Inspect Point is what contractors use to DO inspections and generate reports. First Due is where they SUBMIT those reports to you. Contractors would export their PDF from Inspect Point and upload it through the Business Portal—the workflow is similar to what they do today."
+            </label>
+            <label class="quiz-option" onclick="revealAnswer('kc2')">
+                <input type="radio" name="kc2" style="margin-right: 10px;">
+                D) "I'm not sure, let me get back to you on that."
+            </label>
+            <div id="answer-kc2" class="demo-tip" style="margin-top: 20px; display: none;">
+                <h4>✅ Answer: C</h4>
+                <p>Clarify the distinction between service provider inspection SOFTWARE vs. AHJ submission PLATFORMS. These work together, not against each other. Note: API integrations are on the roadmap but not yet in production.</p>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 26: Knowledge Check 3 -->
+    <div class="slide" id="slide-26">
+        <div class="slide-header">
+            <div class="slide-number">Section 6: Knowledge Checks</div>
+            <h1>Knowledge Check #3</h1>
+        </div>
+        <div class="knowledge-check">
+            <h3>🧠 Scenario Question</h3>
+            <p><strong>The IT Director asks:</strong> "Can firefighters in the field see ITM impairment status?"</p>
+            <p style="margin-top: 15px;"><strong>What's the best response?</strong></p>
+            <label class="quiz-option" onclick="revealAnswer('kc3')">
+                <input type="radio" name="kc3" style="margin-right: 10px;">
+                A) "No, ITM is just for the Fire Marshal's office."
+            </label>
+            <label class="quiz-option" onclick="revealAnswer('kc3')">
+                <input type="radio" name="kc3" style="margin-right: 10px;">
+                B) "Yes—that's actually one of our key differentiators. When an impairment is reported through ITM, that status flows to the pre-plan. Firefighters accessing pre-plan data on scene can see if the building has an impaired sprinkler system. This is the integration that standalone platforms like LIV can't provide."
+            </label>
+            <label class="quiz-option" onclick="revealAnswer('kc3')">
+                <input type="radio" name="kc3" style="margin-right: 10px;">
+                C) "They could look it up in the ITM module if they wanted."
+            </label>
+            <label class="quiz-option" onclick="revealAnswer('kc3')">
+                <input type="radio" name="kc3" style="margin-right: 10px;">
+                D) "That depends on how you configure permissions."
+            </label>
+            <div id="answer-kc3" class="demo-tip" style="margin-top: 20px; display: none;">
+                <h4>✅ Answer: B</h4>
+                <p>This is THE integration story. ITM data flowing to pre-plans = operations awareness. Always connect this to firefighter safety and the "standalone can't do this" message.</p>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 27: Quick Reference - Objection Cheat Sheet -->
+    <div class="slide" id="slide-27">
+        <div class="slide-header">
+            <div class="slide-number">Quick Reference</div>
+            <h1>Objection Handling Cheat Sheet</h1>
+        </div>
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                <tr style="background: rgba(225, 112, 85, 0.3);">
+                    <th style="padding: 15px; text-align: left; border-bottom: 2px solid #e17055;">Objection</th>
+                    <th style="padding: 15px; text-align: left; border-bottom: 2px solid #e17055;">Key Response</th>
+                </tr>
+                <tr style="background: rgba(255,255,255,0.03);">
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">"We use LIV/Brycer"</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">They collect data; we connect it. Pre-plans, occupancies, enforcement.</td>
+                </tr>
+                <tr style="background: rgba(255,255,255,0.05);">
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">"Contractors won't adopt"</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">Contractors prefer digital—confirmation, one portal, status updates.</td>
+                </tr>
+                <tr style="background: rgba(255,255,255,0.03);">
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">"Standalone is cheaper"</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">ITM is free to departments. Hidden cost is managing separate systems.</td>
+                </tr>
+                <tr style="background: rgba(255,255,255,0.05);">
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">"Setup is complicated"</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">Configure once, contractors self-register. Implementation team helps.</td>
+                </tr>
+                <tr style="background: rgba(255,255,255,0.03);">
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">"No budget"</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">$0 to department. Service providers pay ~$20/submission.</td>
+                </tr>
+                <tr style="background: rgba(255,255,255,0.05);">
+                    <td style="padding: 12px;">"How do contractors find us?"</td>
+                    <td style="padding: 12px;">They search/register with AHJs in Business Portal. Communicate your requirements.</td>
+                </tr>
+            </table>
+        </div>
+        </div>
+
+    <!-- Slide 28: Quick Reference - Stakeholder Focus -->
+    <div class="slide" id="slide-28">
+        <div class="slide-header">
+            <div class="slide-number">Quick Reference</div>
+            <h1>Stakeholder Focus Cheat Sheet</h1>
+        </div>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>🏛️ Fire Marshal</h3>
+                <p style="color: #74b9ff; font-size: 0.9rem; margin-bottom: 10px;">Focus: Workflow & Efficiency</p>
+                <ul class="feature-list" style="font-size: 0.9rem;">
+                    <li>Review/approve workflow</li>
+                    <li>Deficiency tracking</li>
+                    <li>Automated compliance checks</li>
+                    <li>Bulk processing tools</li>
+                </ul>
+            </div>
+            <div class="content-card">
+                <h3>👨‍🚒 Fire Chief</h3>
+                <p style="color: #74b9ff; font-size: 0.9rem; margin-bottom: 10px;">Focus: Safety & Strategy</p>
+                <ul class="feature-list" style="font-size: 0.9rem;">
+                    <li>Pre-plan integration</li>
+                    <li>Operations awareness</li>
+                    <li>Zero cost to department</li>
+                    <li>Platform consolidation</li>
+                </ul>
+            </div>
+            <div class="content-card">
+                <h3>💻 IT Director</h3>
+                <p style="color: #74b9ff; font-size: 0.9rem; margin-bottom: 10px;">Focus: Technical Fit</p>
+                <ul class="feature-list" style="font-size: 0.9rem;">
+                    <li>Data architecture</li>
+                    <li>Security model</li>
+                    <li>API capabilities</li>
+                    <li>Permission controls</li>
+                </ul>
+            </div>
+            <div class="content-card">
+                <h3>🔧 Service Provider</h3>
+                <p style="color: #74b9ff; font-size: 0.9rem; margin-bottom: 10px;">Focus: Simplicity</p>
+                <ul class="feature-list" style="font-size: 0.9rem;">
+                    <li>One portal, multiple AHJs</li>
+                    <li>Instant confirmation</li>
+                    <li>Status notifications</li>
+                    <li>Easy submission process</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 29: The Integration Story Script -->
+    <div class="slide" id="slide-29">
+        <div class="slide-header">
+            <div class="slide-number">Quick Reference</div>
+            <h1>The Integration Story (30-Second Version)</h1>
+        </div>
+        <div class="content-card highlight" style="margin-bottom: 20px;">
+            <h3>📢 Memorize This</h3>
+            <p style="font-size: 1.1rem; line-height: 1.8;">"What makes First Due different is that ITM isn't a standalone tool—it's connected to everything. When a report comes in, it automatically links to the occupancy record, updates the pre-plan so firefighters know about impairments, and can trigger automated enforcement. Standalone platforms collect data. First Due connects it."</p>
+        </div>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>🎯 When to Use</h3>
+                <ul class="feature-list">
+                    <li>Opening of any ITM demo</li>
+                    <li>Response to "we already use X"</li>
+                    <li>Explaining differentiation</li>
+                    <li>Closing the value story</li>
+                </ul>
+            </div>
+            <div class="content-card success">
+                <h3>✨ Power Words</h3>
+                <ul class="feature-list">
+                    <li>"Connected" not "separate"</li>
+                    <li>"Integrated" not "standalone"</li>
+                    <li>"Ecosystem" not "tool"</li>
+                    <li>"Automated" not "manual"</li>
+                    <li>"Unified" not "siloed"</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 29B: Best Practices -->
+    <div class="slide" id="slide-29b">
+        <div class="slide-header">
+            <div class="slide-number">Quick Reference</div>
+            <h1>Best Practices Across All Objections</h1>
+        </div>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>🎤 Opening Every Conversation</h3>
+                <ul class="feature-list">
+                    <li><strong>Gratitude:</strong> "Thanks for taking the time..."</li>
+                    <li><strong>Acknowledge:</strong> "I know you're using First Due for inspections..."</li>
+                    <li><strong>Permission:</strong> "I wanted to see if ITM might be a fit—is now a good time?"</li>
+                </ul>
+            </div>
+            <div class="content-card">
+                <h3>👂 Active Listening</h3>
+                <ul class="feature-list">
+                    <li><strong>Repeat back:</strong> "So what I'm hearing is..."</li>
+                    <li><strong>Validate:</strong> "That makes sense..." / "I can see why..."</li>
+                    <li><strong>Ask questions</strong> before jumping to solutions</li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-grid" style="margin-top: 15px;">
+            <div class="content-card warning">
+                <h3>🛑 When to Stop Selling</h3>
+                <ul class="feature-list">
+                    <li>They've said no multiple times</li>
+                    <li>Budget/contract timing impossible</li>
+                    <li>Genuinely satisfied with current state</li>
+                    <li>Frustration level is escalating</li>
+                </ul>
+            </div>
+            <div class="content-card success">
+                <h3>📝 Documentation (All Calls)</h3>
+                <ul class="feature-list">
+                    <li>Log in Zoho within 24 hours</li>
+                    <li>Include objection category</li>
+                    <li>Note specific concerns raised</li>
+                    <li>Tag CSM if appropriate</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    <!-- Slide 30: Module Summary -->
+    <div class="slide" id="slide-30">
+        <div class="slide-header">
+            <div class="slide-number">Module 4 Complete</div>
+            <h1>Key Takeaways</h1>
+        </div>
+        <div class="content-grid">
+            <div class="content-card highlight">
+                <h3>🏢 Department Types</h3>
+                <p>Small rural departments need automation because they lack staff. Large metros need consolidation because they have too many systems. Fire districts need geographic flexibility.</p>
+            </div>
+            <div class="content-card">
+                <h3>🔗 Integration is Everything</h3>
+                <p>Every objection, every scenario, every demo should come back to the integration story. This is the unbeatable differentiator vs. standalone platforms.</p>
+            </div>
+            <div class="content-card">
+                <h3>💬 Objection = Opportunity</h3>
+                <p>Each objection tells you what the prospect values. Use the Acknowledge → Reframe → Differentiate framework to turn resistance into engagement.</p>
+            </div>
+            <div class="content-card success">
+                <h3>🎯 Know Your Audience</h3>
+                <p>Fire Marshals want workflow details. Chiefs want strategic value. IT wants technical confidence. Tailor your message accordingly.</p>
+            </div>
+        </div>
+        <div class="demo-tip">
+            <h4>📚 Next Module Preview</h4>
+            <p><strong>Module 5: Advanced Features & Integration Deep Dive</strong> will cover API integrations, advanced configuration, reporting & analytics, and complex implementation scenarios.</p>
+        </div>
+        </div>
+
+    </div>
+
+    <!-- Fixed Navigation Bar -->
+    <div class="navigation">
+        <button class="nav-btn prev" onclick="prevSlide()">← Back</button>
+        <div class="progress-bar"></div>
+        <button class="nav-btn next" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const slideOrder = ['slide-1','slide-2','slide-3','slide-4','slide-5','slide-6','slide-7','slide-8','slide-9','slide-10','slide-10b','slide-10c','slide-11','slide-11b','slide-11c','slide-12','slide-13','slide-14','slide-15','slide-15b','slide-15c','slide-15d','slide-15e','slide-15f','slide-15g','slide-16','slide-17','slide-18','slide-19','slide-20','slide-21','slide-22','slide-23','slide-24','slide-25','slide-26','slide-27','slide-28','slide-29','slide-29b','slide-30'];
+        const totalSlides = slideOrder.length;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(s => s.classList.remove('active'));
+            currentSlide = n;
+            if (currentSlide > totalSlides) currentSlide = totalSlides;
+            if (currentSlide < 1) currentSlide = 1;
+            const targetSlide = document.getElementById(slideOrder[currentSlide - 1]);
+            if (targetSlide) {
+                targetSlide.classList.add('active');
+            }
+            window.scrollTo(0, 0);
+            updateProgress();
+            updateNavButtons();
+        }
+
+        function nextSlide() { 
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1); 
+            }
+        }
+        
+        function prevSlide() { 
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1); 
+            }
+        }
+        
+        function goToSlide(n) {
+            showSlide(n);
+        }
+        
+        function updateProgress() {
+            const progressBar = document.querySelector('.progress-bar');
+            // Section starts based on content structure
+            const sectionStarts = [1, 2, 12, 16, 26, 32, 39];
+            
+            progressBar.innerHTML = '';
+            for (let i = 1; i <= totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'progress-dot';
+                if (i === currentSlide) dot.classList.add('active');
+                if (sectionStarts.includes(i)) dot.classList.add('section-start');
+                dot.onclick = () => goToSlide(i);
+                progressBar.appendChild(dot);
+            }
+        }
+        
+        function updateNavButtons() {
+            const prevBtn = document.querySelector('.nav-btn.prev');
+            const nextBtn = document.querySelector('.nav-btn.next');
+            
+            prevBtn.disabled = currentSlide === 1;
+            
+            if (currentSlide === totalSlides) {
+                nextBtn.disabled = true;
+                nextBtn.textContent = 'Complete ✓';
+            } else {
+                nextBtn.disabled = false;
+                nextBtn.textContent = 'Next →';
+            }
+        }
+        
+        function revealAnswer(id) {
+            const answerDiv = document.getElementById('answer-' + id);
+            if (answerDiv) {
+                answerDiv.style.display = 'block';
+            }
+        }
+        
+        // Enhanced quiz selection with visual feedback
+        function selectQuizAnswer(element, questionId, isCorrect) {
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                opt.classList.remove('correct', 'incorrect');
+            });
+            
+            if (isCorrect) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+                // Find and highlight correct answer
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+            
+            // Show feedback
+            revealAnswer(questionId);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+            if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+        });
+        
+        // Initialize
+        updateProgress();
+        updateNavButtons();
+    </script>
+</body>
+</html>
